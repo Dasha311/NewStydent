@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог университетов — NeXus{% endblock %}
+
+{% block content %}
+<section class="bg-white border-b border-[var(--bg-secondary)]">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold mb-6">Подборка университетов</h1>
+    <p class="text-secondary text-base md:text-lg max-w-3xl">
+      Выберите университет, чтобы познакомиться с программами, инфраструктурой и возможностями для студентов.
+      Мы подготовили краткое описание для быстрого выбора и подробные страницы с детальной информацией.
+    </p>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 py-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+  {% for university in universities %}
+  <article class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden flex flex-col">
+    <div class="h-48 overflow-hidden">
+      <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-full object-cover" />
+    </div>
+    <div class="p-6 flex-1 flex flex-col">
+      <h2 class="text-xl font-semibold mb-2">{{ university.title }}</h2>
+      <p class="text-secondary text-sm mb-6 flex-1">{{ university.description }}</p>
+      <a href="{% url 'university_detail' university.slug %}" class="inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white font-semibold px-5 py-2.5 rounded-xl transition hover:bg-indigo-600">
+        Подробнее
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </article>
+  {% empty %}
+  <p class="text-secondary">Список университетов временно недоступен. Попробуйте обновить страницу позже.</p>
+  {% endfor %}
+</section>
+{% endblock %}
