@@ -1,0 +1,39 @@
+{% load static %}
+<header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="relative">
+      <img id="logo-btn" src="{% static 'Icons/Logo.png' %}?v=2" alt="NeXus Logo" class="h-9 md:h-10 cursor-pointer" />
+      <nav id="logo-menu" class="hidden absolute left-0 mt-2 w-48 rounded-xl shadow-lg bg-white py-2 text-sm">
+        <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-100">Профиль</a>
+        <a href="{% url 'course_view' %}?course_id=1" class="block px-4 py-2 hover:bg-gray-100">Мои курсы</a>
+        <form method="post" action="{% url 'logout' %}" class="px-4 py-2">
+          {% csrf_token %}
+          <button type="submit" class="w-full text-left hover:bg-gray-100">Выйти</button>
+        </form>
+        <a href="{% url 'delete_account' %}" class="block px-4 py-2 text-red-600 hover:bg-gray-100">Удалить аккаунт</a>
+      </nav>
+    </div>
+    <button id="mobile-btn" class="md:hidden" aria-label="Меню" type="button" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</header>
+<script>
+  const logoBtn = document.getElementById('logo-btn');
+  const mobileBtn = document.getElementById('mobile-btn');
+  const menu = document.getElementById('logo-menu');
+
+  function toggleMenu() {
+    menu.classList.toggle('hidden');
+  }
+
+  logoBtn.addEventListener('click', toggleMenu);
+  mobileBtn.addEventListener('click', toggleMenu);
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && e.target !== logoBtn && e.target !== mobileBtn) {
+      menu.classList.add('hidden');
+    }
+  });
+</script>

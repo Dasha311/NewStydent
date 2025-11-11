@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Назарбаев Университет - NeXus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary: #6C4DFF;
+      --color-bg: #F9F9FB;
+      --color-bg-secondary: #EDEDED;
+      --color-text: #1C1C1E;
+      --color-text-secondary: rgba(60, 60, 67, 0.6);
+      --color-border: #D1D1D6;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <img src="{% static 'Icons/logo.png' %}" alt="NeXus Logo" class="h-9 md:h-10" />
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
+        <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
+        <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
+        <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-4">
+        {% if user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Профиль</a>
+          <form method="post" action="{% url 'logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Выйти</button>
+          </form>
+        {% else %}
+          <a href="#" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
+          <a href="#" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Регистрация</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <a href="{% url 'main_menu' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
+          ← Назад на главную
+        </a>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Назарбаев Университет</h1>
+            <p class="text-xl mb-6 opacity-90">Ведущий исследовательский университет с международными стандартами образования</p>
+            <div class="flex flex-wrap gap-4 text-sm">
+              <span class="bg-white/20 px-4 py-2 rounded-full">📍 Астана, Казахстан</span>
+              <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 2010</span>
+              <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Международный рейтинг</span>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
+              <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span>Тип:</span>
+                  <span class="font-semibold">Исследовательский университет</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Язык обучения:</span>
+                  <span class="font-semibold">Английский</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Рейтинг:</span>
+                  <span class="font-semibold">★ 4.8/5</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Студентов:</span>
+                  <span class="font-semibold">~5,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- University Details -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-12">
+          
+          <!-- About University -->
+          <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold mb-6">Об университете</h2>
+            <div class="space-y-4 text-lg leading-relaxed">
+              <p><strong>Назарбаев Университет</strong> — автономный исследовательский университет в Астане, созданный по инициативе Первого Президента Республики Казахстан Н.А. Назарбаева.</p>
+              <p>Университет стремится стать исследовательским университетом мирового класса, способствующим развитию Казахстана и региона.</p>
+              <p><strong>Миссия:</strong> содействие развитию Казахстана через образование и исследования мирового уровня.</p>
+            </div>
+          </div>
+
+          <!-- Academic Programs -->
+          <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold mb-6">Школы и программы</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-blue-50 rounded-2xl p-6">
+                <h3 class="text-xl font-semibold mb-4 text-blue-800">🎓 Бакалавриат</h3>
+                <ul class="space-y-2 text-blue-700">
+                  <li>• Инженерия и цифровые науки</li>
+                  <li>• Науки и технологии</li>
+                  <li>• Гуманитарные и социальные науки</li>
+                  <li>• Медицина</li>
+                  <li>• Бизнес</li>
+                </ul>
+              </div>
+              <div class="bg-purple-50 rounded-2xl p-6">
+                <h3 class="text-xl font-semibold mb-4 text-purple-800">📚 Магистратура & PhD</h3>
+                <ul class="space-y-2 text-purple-700">
+                  <li>• Магистратура по инженерии</li>
+                  <li>• Магистратура по наукам</li>
+                  <li>• Магистратура по бизнесу</li>
+                  <li>• Докторантура (PhD)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- International Partners -->
+          <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold mb-6">Международные партнеры</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div class="bg-gray-50 p-4 rounded-xl">
+                <p class="font-semibold">University College London</p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-xl">
+                <p class="font-semibold">University of Cambridge</p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-xl">
+                <p class="font-semibold">University of Pennsylvania</p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-xl">
+                <p class="font-semibold">University of Wisconsin-Madison</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+          <!-- Contact Info -->
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Контакты</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">📍</span>
+                <div>
+                  <p class="font-medium">Адрес</p>
+                  <p class="text-sm text-secondary">г. Астана, Кабанбай батыра, 53</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">📞</span>
+                <div>
+                  <p class="font-medium">Телефон</p>
+                  <p class="text-sm text-secondary">+7 (7172) 70-66-00</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">🌐</span>
+                <div>
+                  <p class="font-medium">Сайт</p>
+                  <a href="https://nu.edu.kz" class="text-sm text-blue-600 hover:underline">nu.edu.kz</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Facts -->
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="text-green-600 text-xl">✓</span>
+                <span class="text-sm">Международные стандарты образования</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-green-600 text-xl">✓</span>
+                <span class="text-sm">Исследовательские программы</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-green-600 text-xl">✓</span>
+                <span class="text-sm">Обучение на английском языке</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-green-600 text-xl">✓</span>
+                <span class="text-sm">Современный кампус</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% include 'partials/footer.html' %}
+</body>
+</html>
