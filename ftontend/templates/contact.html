@@ -1,35 +1,27 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>NeXus — Чат с ИИ-консультантом</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+{% block title %}NeXus — Чат с ИИ-консультантом{% endblock %}
+
+{% block extra_head %}>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<style>
+  <style>
     :root {
-      --color-primary: #007AFF; /* Apple blue */
-      --color-bg: #F5F5F7; /* Light gray background */
-      --color-bg-secondary: #FFFFFF; /* White for cards */
-      --color-text: #1D1D1F; /* Dark text */
-      --color-text-secondary: #6E6E73; /* Secondary text */
-      --color-border: #D2D2D7; /* Subtle border */
-      --color-shadow: rgba(0, 0, 0, 0.08); /* Soft shadow */
+      --color-primary: #007AFF;
+      --color-bg: #F5F5F7;
+      --color-bg-secondary: #FFFFFF;
+      --color-text: #1D1D1F;
+      --color-text-secondary: #6E6E73;
+      --color-border: #D2D2D7;
+      --color-shadow: rgba(0, 0, 0, 0.08);
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
       background-color: var(--color-bg);
       color: var(--color-text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       line-height: 1.5;
       overflow-wrap: anywhere;
     }
-    .text-secondary { color: var(--color-text-secondary); }
-    button, a, input {
-      transition: all 0.3s ease;
-    }
+    button, a, input { transition: all 0.3s ease; }
     .card {
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
@@ -37,9 +29,7 @@
       border-radius: 18px;
       box-shadow: 0 4px 30px var(--color-shadow);
     }
-    button:hover, a:hover {
-      transform: translateY(-1px);
-    }
+    button:hover, a:hover { transform: translateY(-1px); }
     .message {
       max-width: 75%;
       padding: 0.75rem 1.25rem;
@@ -48,13 +38,8 @@
       font-size: 0.9rem;
       line-height: 1.5;
     }
-    .animate-fade-in {
-      animation: fade-in 0.3s ease forwards;
-    }
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    .animate-fade-in { animation: fade-in 0.3s ease forwards; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
     .user-message {
       align-self: flex-end;
       background: var(--color-primary);
@@ -78,10 +63,7 @@
       background: var(--color-bg-secondary);
       border: 1px solid var(--color-border);
     }
-    .message-image img {
-      width: 100%;
-      border-radius: 0.5rem;
-    }
+    .message-image img { width: 100%; border-radius: 0.5rem; }
     .media-preview-item {
       position: relative;
       width: 80px;
@@ -90,11 +72,7 @@
       overflow: hidden;
       border: 1px solid var(--color-border);
     }
-    .media-preview-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .media-preview-item img { width: 100%; height: 100%; object-fit: cover; }
     .media-preview-item button {
       position: absolute;
       top: 0.25rem;
@@ -111,13 +89,8 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    .media-preview-item button:hover {
-      background: rgba(0, 0, 0, 0.7);
-    }
-    @keyframes slide-in {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    .media-preview-item button:hover { background: rgba(0, 0, 0, 0.7); }
+    @keyframes slide-in { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .animate-slide-in { animation: slide-in 0.3s ease; }
     .test-option {
       background: var(--color-primary);
@@ -129,10 +102,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .test-option:hover {
-      background: #0051CC;
-      transform: translateY(-2px);
-    }
+    .test-option:hover { background: #0051CC; transform: translateY(-2px); }
     .test-question {
       background: var(--color-bg-secondary);
       border: 1px solid var(--color-border);
@@ -151,85 +121,12 @@
       transition: all 0.3s ease;
       font-size: 0.8rem;
     }
-    .university-button:hover {
-      background: #0051CC;
-      transform: translateY(-1px);
-    }
-    #mobile-menu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
-    }
-    #mobile-menu.open { max-height: 1000px; }
-    #mobile-menu-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 40;
-      transition: opacity 0.3s ease-in-out;
-    }
-    #mobile-menu-backdrop.show { display: block; opacity: 1; }
-    #mobile-menu a,
-    #mobile-menu button {
-      font-size: 1.125rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 1rem;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    #mobile-menu a:hover,
-    #mobile-menu button:hover {
-      color: var(--color-primary);
-    }
-    #mobile-btn svg {
-      width: 28px;
-      height: 28px;
-      stroke: var(--color-text);
-    }
+    .university-button:hover { background: #0051CC; transform: translateY(-1px); }
   </style>
-</head>
-<body class="min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="{% url 'main_menu' %}">
-        <img src="{% static 'Icons/Logo.png' %}?v=2" alt="NeXus Logo" class="h-12 md:h-14" />
-      </a>
-      
-      <nav class="hidden md:flex space-x-8 text-sm font-medium">
-        <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
-        <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
-        <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
-        <a href="{% url 'contacts' %}" class="text-[var(--color-primary)] font-semibold">ИИ - ассистент</a>
-      </nav>
-      
-      <div class="hidden md:flex items-center gap-4">
-        <a href="#" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
-        <a href="#" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Регистрация</a>
-      </div>
-      
-      <button id="mobile-btn" class="md:hidden" aria-label="Открыть меню" type="button" aria-expanded="false" aria-controls="mobile-menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-    
-    <div id="mobile-menu-backdrop" tabindex="-1"></div>
-    <nav id="mobile-menu" class="md:hidden flex flex-col px-6 pb-6 space-y-4 text-base font-medium bg-white border-t border-[var(--color-bg-secondary)] z-50 relative" aria-label="Мобильное меню">
-      <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
-      <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
-      <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
-      <a href="{% url 'contacts' %}" class="text-[var(--color-primary)] font-semibold">ИИ - ассистент</a>
-      <div class="flex flex-col gap-4 mt-4">
-        <a href="{% url 'login' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Войти</a>
-        <a href="{% url 'register' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white w-full rounded-xl font-semibold transition py-3 text-center">Регистрация</a>
-      </div>
-    </nav>
-  </header>
+{% endblock %}
 
-  <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-6 py-12 flex-1">
+{% block content %}
+  <div class="max-w-5xl mx-auto px-6 py-12 flex-1">
     <h1 class="text-3xl font-semibold tracking-tight mb-8">Чат с ИИ-консультантом по профориентации</h1>
     <div class="card flex flex-col" style="min-height: calc(100vh - 12rem);">
       <div id="chat-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-[var(--color-bg)] flex flex-col">
@@ -249,36 +146,13 @@
         </form>
       </div>
     </div>
-  </main>
+  </div>
+{% endblock %}
 
-  <!-- Footer -->
-  {% include 'partials/footer.html' %}
+{% block extra_scripts %}
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      
-      // Mobile Menu
-      const btn = document.getElementById('mobile-btn');
-      const menu = document.getElementById('mobile-menu');
-      const backdrop = document.getElementById('mobile-menu-backdrop');
-
-      function toggleMenu() {
-        const isOpen = menu.classList.toggle('open');
-        backdrop.classList.toggle('show', isOpen);
-        btn.setAttribute('aria-expanded', isOpen);
-      }
-
-      btn.addEventListener('click', toggleMenu);
-      backdrop.addEventListener('click', toggleMenu);
-
-      // Принудительная перезагрузка логотипа для обхода кэша
-      window.addEventListener('load', function() {
-        const logos = document.querySelectorAll('img[alt="NeXus Logo"]');
-        logos.forEach(logo => {
-          const originalSrc = logo.src.split('?')[0];
-          logo.src = originalSrc + '?v=' + new Date().getTime();
-        });
-      });
 
       // Chat Functionality
       const chatForm = document.getElementById('chat-form');
@@ -360,7 +234,7 @@
         "atu": {
           name: "Алматинский технологический университет (АТУ)",
           military: "есть (набор на военную подготовку)",
-          scores: "пороги по программам (от ~45–65 и выше)",
+          scores: "пороги по прграммам (от ~45–65 и выше)",
           budget: "есть бюджетные места",
           directions: "пищевая промышленность, текстиль, технологии, инженерные специальности, IT, экономика, туризм и сервис",
           aliases: ["ату", "atu", "алматинский технологический"]
@@ -419,13 +293,20 @@
         },
         {
           keywords: ['направления', 'специальности', 'факультеты', 'программы', 'образование', 'обучение', 'что изучать', 'какие направления', 'специальность', 'факультет', 'образовательная программа'],
-          answer: 'directions' // Специальный маркер для вопроса о направлениях
+          answer: 'directions'
         },
         {
-          keywords: ['университет', 'вуз', 'институт', 'поступление', 'высшее образование', 'факультет', 'направление', 'специальность вуза', 'высшее учебное заведение', 'поступить в вуз', 'выбрать вуз', 'подобрать университет', 'куда поступить', 'выбор университета', 'рейтинг вузов', 'топ университетов', 'лучшие вузы', 'вузы россии', 'универ'],
-          answer: 'university' // Специальный маркер для общего вопроса об университетах
+          keywords: ['университет', 'университета', 'вузы', 'вуз', 'универ', 'университеты', 'университетов', 'колледж', 'институт', 'учебное заведение'],
+          answer: 'university'
         },
-        // ... остальные FAQ остаются без изменений
+        {
+          keywords: ['спасибо', 'благодарю', 'благодарю вас', 'спасибо большое', 'благодарен', 'все понятно', 'понял', 'ясно', 'круто'],
+          answer: 'Рад помочь! Если появятся ещё вопросы о профессиях или университетах — пишите.'
+        },
+        {
+          keywords: ['привет', 'здравствуйте', 'добрый день', 'добрый вечер', 'доброе утро', 'хай', 'hello', 'hi'],
+          answer: 'Здравствуйте! Чем могу помочь в выборе профессии или университета?'
+        }
       ];
 
       const defaultReply = 'Не совсем понял ваш вопрос о профориентации или выборе вуза. Попробуйте переформулировать или напишите "Позвать консультанта" для связи со специалистом. Можете также рассказать о своих интересах - я помогу подобрать профессии!';
@@ -433,65 +314,36 @@
       // ДАННЫЕ ДЛЯ ПРОФОРИЕНТАЦИОННОГО ТЕСТА
       const proforientationTest = [
         {
-          question: "Какой тип деятельности вам больше нравится?",
-          options: [
-            "Работа с людьми (общение, помощь, обучение)",
-            "Работа с техникой и технологиями",
-            "Творческая работа (искусство, дизайн, музыка)",
-            "Аналитическая работа (исследования, анализ данных)",
-            "Организационная работа (управление, планирование)"
-          ]
+          question: 'Как вам больше нравится проводить время?',
+          options: ['С людьми', 'С техникой', 'С творческими задачами', 'С научными исследованиями', 'С организационными задачами']
         },
         {
-          question: "Что вам интереснее всего?",
-          options: [
-            "Естественные науки (биология, химия, медицина)",
-            "Техника и информационные технологии",
-            "Искусство и культура",
-            "Общественные науки и право",
-            "Бизнес и экономика"
-          ]
+          question: 'Что вас вдохновляет?',
+          options: ['Помогать другим', 'Создавать что-то новое', 'Решать сложные задачи', 'Понимать, как устроен мир', 'Управлять процессами']
         },
         {
-          question: "Как вы предпочитаете работать?",
-          options: [
-            "В команде, общаясь с коллегами",
-            "Самостоятельно, сосредоточенно",
-            "Творчески, выражая свои идеи",
-            "Анализируя информацию и данные",
-            "Организуя процессы и людей"
-          ]
+          question: 'Какой предмет в школе нравится больше всего?',
+          options: ['Обществознание', 'Информатика', 'Литература', 'Физика', 'Математика']
         },
         {
-          question: "Что для вас важнее в работе?",
-          options: [
-            "Помощь другим людям",
-            "Создание технических решений",
-            "Самовыражение и креативность",
-            "Поиск истины и анализ",
-            "Достижение результатов и успеха"
-          ]
+          question: 'Какая деятельность кажется интереснее?',
+          options: ['Общаться и взаимодействовать с людьми', 'Работать с компьютером и технологиями', 'Создавать дизайн или музыку', 'Проводить эксперименты', 'Организовывать и планировать проекты']
         },
         {
-          question: "Какой школьный предмет вам нравится больше всего?",
-          options: [
-            "Биология, химия, география",
-            "Математика, физика, информатика",
-            "Литература, искусство, музыка",
-            "История, обществознание, право",
-            "Экономика, бизнес-предметы"
-          ]
+          question: 'Что для вас важнее всего в работе?',
+          options: ['Помогать людям', 'Быть в курсе технологий', 'Выражать себя творчески', 'Находить закономерности', 'Руководить и принимать решения']
         }
       ];
 
       const testResults = {
-        "Человеко-ориентированные профессии": ["Психолог", "Учитель", "Врач", "Социальный работник", "HR-специалист"],
-        "Технические профессии": ["Инженер", "Программист", "Аналитик данных", "Сетевой администратор", "Технический специалист"],
-        "Творческие профессии": ["Дизайнер", "Художник", "Музыкант", "Архитектор", "Копирайтер"],
-        "Научно-исследовательские профессии": ["Ученый", "Исследователь", "Аналитик", "Эксперт", "Консультант"],
-        "Организационные профессии": ["Менеджер", "Предприниматель", "Руководитель", "Организатор", "Координатор"]
+        'Человеко-ориентированные профессии': ['Психолог', 'Учитель', 'HR-специалист'],
+        'Технические профессии': ['Инженер', 'Программист', 'Аналитик данных'],
+        'Творческие профессии': ['Дизайнер', 'Арт-директор', 'Музыкант'],
+        'Научно-исследовательские профессии': ['Научный сотрудник', 'Исследователь', 'Биотехнолог'],
+        'Организационные профессии': ['Менеджер проектов', 'Предприниматель', 'Маркетолог']
       };
 
+      let currentUniversityContext = null;
       let currentTestState = {
         inProgress: false,
         currentQuestion: 0,
@@ -499,25 +351,21 @@
         userInterests: []
       };
 
-      let currentUniversityContext = null;
-
-      function findUniversityByName(name) {
-        const lowerName = name.toLowerCase();
+      function findUniversityByName(message) {
+        const lower = message.toLowerCase();
         for (const [key, uni] of Object.entries(universities)) {
-          if (uni.aliases.some(alias => lowerName.includes(alias)) || 
-              lowerName.includes(key) ||
-              lowerName.includes(uni.name.toLowerCase())) {
+          if (uni.aliases.some(alias => lower.includes(alias))) {
             return key;
           }
         }
         return null;
       }
 
-      function getUniversityInfo(universityKey, infoType) {
+      function getUniversityInfo(universityKey, infoType = 'all') {
         const uni = universities[universityKey];
         if (!uni) return null;
 
-        switch(infoType) {
+        switch (infoType) {
           case 'military':
             return `🎖️ ${uni.name}\n\nВоенная кафедра: ${uni.military}`;
           case 'scores':
@@ -860,5 +708,4 @@
       createNewChat();
     });
   </script>
-</body>
-</html>
+{% endblock %}

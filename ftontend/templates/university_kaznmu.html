@@ -1,238 +1,187 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>КазНМУ им. Асфендиярова - NeXus</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --color-primary: #6C4DFF;
-      --color-bg: #F9F9FB;
-      --color-bg-secondary: #EDEDED;
-      --color-text: #1C1C1E;
-      --color-text-secondary: rgba(60, 60, 67, 0.6);
-      --color-border: #D1D1D6;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col">
-  <header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <img src="{% static 'Icons/logo.png' %}" alt="NeXus Logo" class="h-9 md:h-10" />
-      <nav class="hidden md:flex space-x-8 text-sm font-medium">
-        <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
-        <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
-        <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
-        <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
-      </nav>
-      <div class="hidden md:flex items-center gap-4">
-        {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Профиль</a>
-          <form method="post" action="{% url 'logout' %}" class="inline">
-            {% csrf_token %}
-            <button type="submit" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Выйти</button>
-          </form>
-        {% else %}
-          <a href="{% url 'login' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
-          <a href="{% url 'register' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Регистрация</a>
-        {% endif %}
-      </div>
-    </div>
-  </header>
+{% block title %}КазНМУ им. Асфендиярова - NeXus{% endblock %}
 
-  <main class="flex-grow">
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-red-600 to-red-800 text-white py-16">
-      <div class="max-w-7xl mx-auto px-6">
-        <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
-          ← Назад к ВУЗам
-        </a>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">КазНМУ им. Асфендиярова</h1>
-            <p class="text-xl mb-6 opacity-90">Ведущий медицинский университет Казахстана</p>
-            <div class="flex flex-wrap gap-4 text-sm">
-              <span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы, Казахстан</span>
-              <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1931</span>
-              <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Медицинский лидер</span>
-            </div>
-          </div>
-          <div class="flex justify-center">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
-              <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
-              <div class="space-y-3 text-sm">
-                <div class="flex justify-between">
-                  <span>Тип:</span>
-                  <span class="font-semibold">Медицинский университет</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Языки обучения:</span>
-                  <span class="font-semibold">Казахский, Русский, Английский</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Рейтинг:</span>
-                  <span class="font-semibold">★ 4.8/5</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Студентов:</span>
-                  <span class="font-semibold">~8,000</span>
-                </div>
+{% block content %}
+      <!-- Hero Section -->
+      <section class="bg-gradient-to-r from-red-600 to-red-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6">
+          <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
+            ← Назад к ВУЗам
+          </a>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 class="text-4xl md:text-6xl font-bold mb-4">КазНМУ им. Асфендиярова</h1>
+              <p class="text-xl mb-6 opacity-90">Ведущий медицинский университет Казахстана</p>
+              <div class="flex flex-wrap gap-4 text-sm">
+                <span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы, Казахстан</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1931</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Медицинский лидер</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- University Details -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-12">
-          
-          <!-- About University -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Об университете</h2>
-            <div class="space-y-4 text-lg leading-relaxed">
-              <p><strong>Казахский национальный медицинский университет имени С.Д. Асфендиярова</strong> — ведущий медицинский вуз Казахстана, носящий имя первого ректора Санжара Асфендиярова.</p>
-              <p>Основан в 1931 году как Алма-Атинский государственный медицинский институт. В 2001 году получил статус университета.</p>
-              <p>Университет готовит высококвалифицированных врачей и медицинских специалистов для всей системы здравоохранения Казахстана.</p>
-            </div>
-          </div>
-
-          <!-- Academic Programs -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="bg-red-50 rounded-2xl p-6">
-                <h3 class="text-xl font-semibold mb-4 text-red-800">🎓 Общая медицина</h3>
-                <ul class="space-y-2 text-red-700">
-                  <li>• Лечебное дело</li>
-                  <li>• Педиатрия</li>
-                  <li>• Стоматология</li>
-                  <li>• Фармация</li>
-                  <li>• Медико-профилактическое дело</li>
-                </ul>
-              </div>
-              <div class="bg-blue-50 rounded-2xl p-6">
-                <h3 class="text-xl font-semibold mb-4 text-blue-800">📚 Последипломное образование</h3>
-                <ul class="space-y-2 text-blue-700">
-                  <li>• Ординатура</li>
-                  <li>• Магистратура</li>
-                  <li>• Докторантура</li>
-                  <li>• Повышение квалификации</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Infrastructure -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Клинические базы и инфраструктура</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-4">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🏥</span>
-                  <div>
-                    <h4 class="font-semibold">Учебные клиники</h4>
-                    <p class="text-secondary text-sm">Собственные клинические базы</p>
+            <div class="flex justify-center">
+              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
+                <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
+                <div class="space-y-3 text-sm">
+                  <div class="flex justify-between">
+                    <span>Тип:</span>
+                    <span class="font-semibold">Медицинский университет</span>
                   </div>
-                </div>
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🔬</span>
-                  <div>
-                    <h4 class="font-semibold">Научные центры</h4>
-                    <p class="text-secondary text-sm">Исследовательские лаборатории</p>
+                  <div class="flex justify-between">
+                    <span>Языки обучения:</span>
+                    <span class="font-semibold">Казахский, Русский, Английский</span>
                   </div>
-                </div>
-              </div>
-              <div class="space-y-4">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">📚</span>
-                  <div>
-                    <h4 class="font-semibold">Медицинская библиотека</h4>
-                    <p class="text-secondary text-sm">Специализированная литература</p>
+                  <div class="flex justify-between">
+                    <span>Рейтинг:</span>
+                    <span class="font-semibold">★ 4.8/5</span>
                   </div>
-                </div>
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">💻</span>
-                  <div>
-                    <h4 class="font-semibold">Симуляционный центр</h4>
-                    <p class="text-secondary text-sm">Современные тренажеры</p>
+                  <div class="flex justify-between">
+                    <span>Студентов:</span>
+                    <span class="font-semibold">~8,000</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Contact Info -->
-          <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Контакты</h3>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📍</span>
-                <div>
-                  <p class="font-medium">Адрес</p>
-                  <p class="text-sm text-secondary">ул. Толе би, 94, Алматы</p>
+      </section>
+  
+      <!-- University Details -->
+      <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Main Content -->
+          <div class="lg:col-span-2 space-y-12">
+  
+            <!-- About University -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+              <h2 class="text-3xl font-bold mb-6">Об университете</h2>
+              <div class="space-y-4 text-lg leading-relaxed">
+                <p><strong>Казахский национальный медицинский университет имени С.Д. Асфендиярова</strong> — ведущий медицинский вуз Казахстана, носящий имя первого ректора Санжара Асфендиярова.</p>
+                <p>Основан в 1931 году как Алма-Атинский государственный медицинский институт. В 2001 году получил статус университета.</p>
+                <p>Университет готовит высококвалифицированных врачей и медицинских специалистов для всей системы здравоохранения Казахстана.</p>
+              </div>
+            </div>
+  
+            <!-- Academic Programs -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+              <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-red-50 rounded-2xl p-6">
+                  <h3 class="text-xl font-semibold mb-4 text-red-800">🎓 Общая медицина</h3>
+                  <ul class="space-y-2 text-red-700">
+                    <li>• Лечебное дело</li>
+                    <li>• Педиатрия</li>
+                    <li>• Стоматология</li>
+                    <li>• Фармация</li>
+                    <li>• Медико-профилактическое дело</li>
+                  </ul>
+                </div>
+                <div class="bg-blue-50 rounded-2xl p-6">
+                  <h3 class="text-xl font-semibold mb-4 text-blue-800">📚 Последипломное образование</h3>
+                  <ul class="space-y-2 text-blue-700">
+                    <li>• Ординатура</li>
+                    <li>• Магистратура</li>
+                    <li>• Докторантура</li>
+                    <li>• Повышение квалификации</li>
+                  </ul>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📞</span>
-                <div>
-                  <p class="font-medium">Телефон</p>
-                  <p class="text-sm text-secondary">+7 (727) 292-70-14</p>
+            </div>
+            <!-- Infrastructure -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+              <h2 class="text-3xl font-bold mb-6">Клинические базы и инфраструктура</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">🏥</span>
+                    <div>
+                      <h4 class="font-semibold">Учебные клиники</h4>
+                      <p class="text-secondary text-sm">Собственные клинические базы</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">🔬</span>
+                    <div>
+                      <h4 class="font-semibold">Научные центры</h4>
+                      <p class="text-secondary text-sm">Исследовательские лаборатории</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">🌐</span>
-                <div>
-                  <p class="font-medium">Сайт</p>
-                  <a href="https://kaznmu.edu.kz" class="text-sm text-blue-600 hover:underline">kaznmu.edu.kz</a>
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">📚</span>
+                    <div>
+                      <h4 class="font-semibold">Медицинская библиотека</h4>
+                      <p class="text-secondary text-sm">Специализированная литература</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">💻</span>
+                    <div>
+                      <h4 class="font-semibold">Симуляционный центр</h4>
+                      <p class="text-secondary text-sm">Современные тренажеры</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+  
+          <!-- Sidebar -->
+          <div class="space-y-6">
+            <!-- Contact Info -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+              <h3 class="text-xl font-semibold mb-4">Контакты</h3>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">📍</span>
+                  <div>
+                    <p class="font-medium">Адрес</p>
+                    <p class="text-sm text-secondary">ул. Толе би, 94, Алматы</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">📞</span>
+                  <div>
+                    <p class="font-medium">Телефон</p>
+                    <p class="text-sm text-secondary">+7 (727) 292-70-14</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">🌐</span>
+                  <div>
+                    <p class="font-medium">Сайт</p>
+                    <a href="https://kaznmu.edu.kz" class="text-sm text-blue-600 hover:underline">kaznmu.edu.kz</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Quick Facts -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+              <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-green-600 text-xl">✓</span>
+                  <span class="text-sm">Ведущий медицинский вуз</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-green-600 text-xl">✓</span>
+                  <span class="text-sm">Современные клинические базы</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-green-600 text-xl">✓</span>
+                  <span class="text-sm">Международное признание</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-green-600 text-xl">✓</span>
+                  <span class="text-sm">Высокий уровень трудоустройства</span>
+                </div>
 
-          <!-- Quick Facts -->
-          <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Ведущий медицинский вуз</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Современные клинические базы</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Международное признание</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Высокий уровень трудоустройства</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
-
-  {% include 'partials/footer.html' %}
-</body>
-</html>
+      </section>
+  
+{% endblock %}

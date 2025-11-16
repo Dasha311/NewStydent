@@ -6,39 +6,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}NeXus{% endblock %}</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --brand-primary: #6C4DFF;
-      --bg-main: #F9F9FB;
-      --bg-secondary: #EDEDED;
-      --text-main: #1C1C1E;
-      --text-secondary: rgba(60, 60, 67, 0.6);
-      --border-color: #D1D1D6;
+      --color-primary: #6C4DFF;
+      --color-primary-light: #8A6EFF;
+      --color-bg: #F9F9FB;
+      --color-bg-secondary: #EDEDED;
+      --color-text: #1C1C1E;
+      --color-text-secondary: rgba(60, 60, 67, 0.6);
+      --color-border: #D1D1D6;
+      --brand-primary: var(--color-primary);
+      --bg-main: var(--color-bg);
+      --bg-secondary: var(--color-bg-secondary);
+      --text-main: var(--color-text);
+      --text-secondary: var(--color-text-secondary);
+      --border-color: var(--color-border);
     }
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale
     }
+    .text-secondary { color: var(--color-text-secondary); }
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+    #mobile-menu.open {
+      max-height: 1000px;
+    }
+    #mobile-menu-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 40;
+      transition: opacity 0.3s ease-in-out;
+    }
+    #mobile-menu-backdrop.show {
+      display: block;
+      opacity: 1;
+    }
+    #mobile-menu a,
+    #mobile-menu button {
+      font-size: 1.125rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 1rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #mobile-menu a:hover,
+    #mobile-menu button:hover {
+      color: var(--color-primary);
+    }
+    #mobile-btn svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--color-text);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }    
   </style>
+  {% block extra_head %}{% endblock %}
 </head>
 <body class="min-h-screen flex flex-col">
 
   <!-- Хедер -->
-  <header class="bg-white border-b border-[var(--bg-secondary)] sticky top-0 z-50">
+  <header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <img src="{% static 'Icons/Logo.png' %}" alt="EduPath Logo" class="h-9 md:h-10" />
-       <a href="{% block back_url %}{% url 'main_menu' %}{% endblock %}" class="text-[var(--brand-primary)] hover:underline text-sm font-medium">Назад</a>
+      <a href="{% url 'main_menu' %}" class="flex items-center gap-3">
+        <img src="{% static 'Icons/Logo.png' %}?v=2" alt="NeXus Logo" class="h-12 md:h-14" />
+      </a>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        {% with current_url=request.resolver_match.url_name %}
+          <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'main_menu' %}text-[var(--color-primary)] font-semibold{% endif %}">Главная</a>
+          <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)] {% if current_url in ('course_view', 'university_detail') %}text-[var(--color-primary)] font-semibold{% endif %}">ВУЗы</a>
+          <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'about' %}text-[var(--color-primary)] font-semibold{% endif %}">О нас</a>
+          <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'contacts' %}text-[var(--color-primary)] font-semibold{% endif %}">ИИ - ассистент</a>
+        {% endwith %}
+      </nav>
+      <div class="hidden md:flex items-center gap-4">
+        <a href="{% url 'login' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
+        <a href="{% url 'register' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Регистрация</a>
+      </div>
+      <button id="mobile-btn" class="md:hidden" aria-label="Открыть меню" type="button" aria-expanded="false" aria-controls="mobile-menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
+    <div id="mobile-menu-backdrop" tabindex="-1"></div>
+    <nav id="mobile-menu" class="md:hidden flex flex-col px-6 pb-6 space-y-4 text-base font-medium bg-white border-t border-[var(--color-bg-secondary)] z-50 relative" aria-label="Мобильное меню">
+      <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
+      <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
+      <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
+      <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
+      <div class="flex flex-col gap-4 mt-4">
+        <a href="{% url 'login' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Войти</a>
+        <a href="{% url 'register' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white w-full rounded-xl font-semibold transition py-3 text-center">Регистрация</a>
+      </div>
+    </nav>
   </header>
 
-  <!-- Основной контент -->
   <main class="flex-1">
     {% block content %}{% endblock %}
   </main>
 
-{% include 'partials/footer.html' %}  
+  {% include 'partials/footer.html' %}
+
+  <script>
+    const btn = document.getElementById('mobile-btn');
+    const menu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('mobile-menu-backdrop'); 
+
+    if (btn && menu && backdrop) {
+      function toggleMenu() {
+        const isOpen = menu.classList.toggle('open');
+        backdrop.classList.toggle('show', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+      }
+
+      btn.addEventListener('click', toggleMenu);
+      backdrop.addEventListener('click', toggleMenu);
+    }
+  </script>
+  {% block extra_scripts %}{% endblock %}
 
 </body>
 </html>
