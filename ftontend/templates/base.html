@@ -86,7 +86,7 @@
       <nav class="hidden md:flex space-x-8 text-sm font-medium">
         {% with current_url=request.resolver_match.url_name %}
           <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'main_menu' %}text-[var(--color-primary)] font-semibold{% endif %}">Главная</a>
-          <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)] {% if current_url in ('course_view', 'university_detail') %}text-[var(--color-primary)] font-semibold{% endif %}">ВУЗы</a>
+          <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'course_view' or current_url == 'university_detail' %}text-[var(--color-primary)] font-semibold{% endif %}">ВУЗы</a>
           <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'about' %}text-[var(--color-primary)] font-semibold{% endif %}">О нас</a>
           <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'contacts' %}text-[var(--color-primary)] font-semibold{% endif %}">ИИ - ассистент</a>
         {% endwith %}
