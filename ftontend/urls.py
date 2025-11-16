@@ -11,7 +11,4 @@ urlpatterns = [
     path("videos/almaty-management-university/", views.video_detail, name="video_detail"),
     path("videos/nazarbayev-university/", views.video_detail2, name="video_detail2"),
     path("videos/kbtu/", views.video_detail3, name="video_detail3"),
-    path("auth/login/", views.login_view, name="login"),
-    path("auth/register/", views.register_view, name="register"),
-    path("account/delete/", views.delete_account_view, name="delete_account"),
 ]

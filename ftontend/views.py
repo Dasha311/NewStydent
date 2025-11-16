@@ -1,6 +1,3 @@
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import Http404
 from django.shortcuts import redirect, render
 
@@ -128,58 +125,3 @@ def video_detail2(request):
 def video_detail3(request):
     return render(request, "video_detail3.html")
 
-
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect("profile")
-
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect("profile")
-    else:
-        form = AuthenticationForm(request)
-
-    return render(request, "auth/login.html", {"form": form})
-
-
-def register_view(request):
-    if request.user.is_authenticated:
-        return redirect("profile")
-
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect("profile")
-    else:
-        form = UserCreationForm()
-
-    return render(request, "auth/register.html", {"form": form})
-
-
-def profile_view(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-    return render(request, "profile.html")
-
-
-def logout_view(request):
-    if request.method == "POST":
-        auth_logout(request)
-    return redirect("main_menu")
-
-
-def delete_account_view(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-
-    if request.method == "POST":
-        user = request.user
-        auth_logout(request)
-        user.delete()
-        return redirect("main_menu")
-
-    return render(request, "account/delete_account.html")
