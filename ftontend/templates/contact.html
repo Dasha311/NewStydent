@@ -71,9 +71,23 @@
     }
     #chat-container {
       min-height: 0;
+      max-height: calc(100vh - 220px);
       overflow-y: auto;
       padding-right: 0.25rem;
-    }    
+      scroll-behavior: smooth;
+      overscroll-behavior: contain;
+    }
+    #chat-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    #chat-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+    }
+    #chat-container::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: 8px;
+    }   
     button:hover, a:hover { transform: translateY(-1px); }
     .message {
       max-width: 75%;
@@ -666,6 +680,7 @@
             "Выбирайте проекты, где требуется объединять разные команды и стейкхолдеров."
           ]
         },
+        
         pragmatist: {
           title: "Прагматик-созидатель",
           description: "Вы ориентированы на ощутимый результат, любите доводить идеи до конкретных решений и продуктов.",
@@ -680,6 +695,7 @@
       };
 
       let currentUniversityContext = null;
+      let currentTestMessageElement = null;
       let currentTestState = {
         inProgress: false,
         currentQuestion: 0,
@@ -801,13 +817,12 @@
           answers: [],
           userInterests: []
         };
+        currentTestMessageElement = null;        
         showTestQuestion(0);
       }
 
       function showTestQuestion(questionIndex) {
         const question = proforientationTest[questionIndex];
-        const testMessage = document.createElement('div');
-        testMessage.className = 'message bot-message animate-fade-in';
         
         let html = `<div class="test-question">
           <strong>Вопрос ${questionIndex + 1}/${proforientationTest.length}</strong><br>
@@ -820,9 +835,19 @@
         });
         
         html += `</div></div>`;
-        testMessage.innerHTML = html;
-        chatContainer.appendChild(testMessage);
-        chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+        if (currentTestMessageElement) {
+          currentTestMessageElement.innerHTML = html;
+        } else {
+          const testMessage = document.createElement('div');
+          testMessage.className = 'message bot-message animate-fade-in';
+          testMessage.innerHTML = html;
+          chatContainer.appendChild(testMessage);
+          currentTestMessageElement = testMessage;
+        }
+
+        requestAnimationFrame(() => {
+          chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+        });
       }
 
       function handleTestAnswer(questionIndex, answerType) {
@@ -849,9 +874,6 @@
               ${profile.actions.map(action => `<li>${action}</li>`).join('')}
             </ul>`
           : '';
-
-        const resultMessage = document.createElement('div');
-        resultMessage.className = 'message bot-message animate-fade-in';
         
         let html = `<div class="test-question">
           <strong>🎉 Результаты вашего теста!</strong><br><br>
@@ -867,8 +889,16 @@
           Могу подсказать подходящие образовательные программы и вузы, хотите продолжить?
         </div>`;
         
-        resultMessage.innerHTML = html;
-        chatContainer.appendChild(resultMessage);
+        if (currentTestMessageElement) {
+          currentTestMessageElement.innerHTML = html;
+        } else {
+          const resultMessage = document.createElement('div');
+          resultMessage.className = 'message bot-message animate-fade-in';
+          resultMessage.innerHTML = html;
+          chatContainer.appendChild(resultMessage);
+        }
+
+        currentTestMessageElement = null;
         
         currentTestState.inProgress = false;
         chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
@@ -958,6 +988,7 @@
           answers: [],
           userInterests: []
         };
+        currentTestMessageElement = null;        
         
         // Сбрасываем контекст университета
         currentUniversityContext = null;
