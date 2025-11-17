@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ university.title }} — NeXus{% endblock %}
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
+  <header>
+    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Алматы</p>
+    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
+    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
+  </header>
+
+  <div class="rounded-3xl overflow-hidden shadow-xl">
+    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2">
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Почему стоит выбрать ALMAU</h2>
+      <p class="text-secondary text-base">Университет известен своей предпринимательской экосистемой, акселераторами и международными аккредитациями бизнес-программ. Здесь упор делается на проектное обучение и ESG-повестку.</p>
+    </article>
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Направления подготовки</h2>
+      <ul class="text-secondary space-y-2 list-disc list-inside">
+        <li>Бизнес-администрирование и финансы</li>
+        <li>Маркетинг и digital-коммуникации</li>
+        <li>Менеджмент в креативных индустриях</li>
+        <li>IT-менеджмент и аналитика данных</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
+    <h2 class="text-2xl font-semibold mb-4">Студенческая жизнь</h2>
+    <p class="text-secondary">ALMAU развивает сообщество стартапов, студенческих клубов и международных обменов. Кампус расположен в деловом районе Алматы, что позволяет совмещать обучение со стажировками в ведущих компаниях.</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ university.title }} — NeXus{% endblock %}
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
+  <header>
+    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Астана</p>
+    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
+    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
+  </header>
+
+  <div class="rounded-3xl overflow-hidden shadow-xl">
+    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2">
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Образовательная модель</h2>
+      <p class="text-secondary text-base">NU сотрудничает с ведущими зарубежными университетами, внедряет английский язык обучения и проектно-исследовательский подход. Программы аккредитованы международными агентствами.</p>
+    </article>
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Ключевые школы</h2>
+      <ul class="text-secondary space-y-2 list-disc list-inside">
+        <li>School of Engineering and Digital Sciences</li>
+        <li>School of Sciences and Humanities</li>
+        <li>Graduate School of Business и Public Policy</li>
+        <li>School of Medicine с современным клиническим центром</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
+    <h2 class="text-2xl font-semibold mb-4">Инфраструктура</h2>
+    <p class="text-secondary">Кампус Назарбаев Университета — это лаборатории, fab-labs, библиотека с круглосуточным доступом и современные общежития. Студенты участвуют в грантовых исследованиях, стартап-инкубаторах и международных обменах.</p>
+  </div>
+</section>
+{% endblock %}

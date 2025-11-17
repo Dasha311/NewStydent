@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ university.title }} — NeXus{% endblock %}
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
+  <header>
+    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Алматы</p>
+    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
+    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
+  </header>
+
+  <div class="rounded-3xl overflow-hidden shadow-xl">
+    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
+  </div>
+
+  <div class="grid gap-8 md:grid-cols-2">
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Технологическое лидерство</h2>
+      <p class="text-secondary text-base">КБТУ готовит инженеров, data scientists и специалистов нефтегазовой отрасли. Университет развивает партнерства с индустрией и открывает двойные дипломы с британскими вузами.</p>
+    </article>
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-semibold">Что изучают студенты</h2>
+      <ul class="text-secondary space-y-2 list-disc list-inside">
+        <li>Computer Science и программная инженерия</li>
+        <li>Информационная безопасность и телеком</li>
+        <li>Химическая инженерия и нефтегазовое дело</li>
+        <li>Финансы и управление проектами</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
+    <h2 class="text-2xl font-semibold mb-4">Кампус и комьюнити</h2>
+    <p class="text-secondary">Кампус расположен в центре города и оснащён современными лабораториями, коворкингами и центрами кибербезопасности. Студенты участвуют в хакатонах, case championship и программах академической мобильности.</p>
+  </div>
+</section>
+{% endblock %}
