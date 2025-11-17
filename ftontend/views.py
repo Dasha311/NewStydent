@@ -30,58 +30,59 @@ UNIVERSITY_LIST = [
         "slug": "kaznu",
         "title": "КазНУ им. аль-Фараби",
         "description": "Ведущий классический университет Казахстана с сильными научными школами и международными программами.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Al-Farabi_Kazakh_National_University_main_building.jpg",
+        "image": "https://tse4.mm.bing.net/th/id/OIP.04VoTSK8TSPRiA37Jf06sAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
     },
     {
         "slug": "kaznpu",
         "title": "КазНПУ им. Абая",
         "description": "Главный педагогический университет страны с богатой историей подготовки учителей и методистов.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Akhmet_Baitursynuly_Street_13_Almaty_02.jpg",
+        "image": "https://th.bing.com/th/id/R.a80632595b0d22985d2cbf690c2b5e6b?rik=6De7vETNPPDf1A&pid=ImgRaw&r=0",
     },
     {
         "slug": "kaznmu",
         "title": "КазНМУ им. С.Д. Асфендиярова",
         "description": "Крупнейший медицинский вуз Казахстана с современной клинической базой и симуляционными центрами.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4f/S.D._Asfendiyarov_Kazakh_National_Medical_University.jpg",
+        "image": "https://cdn.nur.kz/images/1120x630/3e1dc070e20b67a0.jpeg",
     },
     {
         "slug": "satbayev",
         "title": "Satbayev University",
         "description": "Инженерно-технический лидер региона с акцентом на цифровые технологии и партнерство с индустрией.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Kazakh-British_Technical_University.jpg",
+       "image": "https://tse3.mm.bing.net/th/id/OIP.fHBO3n4VzN_s2JN-kPfOoAHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
     },
     {
         "slug": "kazumo",
         "title": "КазУМОиМЯ им. Абылай хана",
         "description": "Специализируется на международных отношениях, переводе и глобальной коммуникации.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/Ablai_Khan_University.jpg",
+        "image": "https://th.bing.com/th/id/R.a7e1d3b6835fc0480ad4c4c0128f2c06?rik=PbgHjtH%2bEMmdSw&pid=ImgRaw&r=0",
     },
     {
         "slug": "technological",
         "title": "Алматинский технологический университет",
         "description": "Лидер в сфере пищевых технологий, дизайна и лёгкой промышленности.",
-        "image": "https://tengrinews.kz/userdata/news/2017/news_326837/thumb_m/photo_219423.png",
+        "image": "https://th.bing.com/th/id/R.48b3ae67ed7c4a0649ae58f7b0df23df?rik=XiI6BEVUzIDWwg&pid=ImgRaw&r=0",
     },
     {
         "slug": "german",
         "title": "Казахстанско-Немецкий университет",
         "description": "Мост между Казахстаном и Европой с программами на немецком и английском языках.",
-        "image": "https://dku.kz/assets/files/000/000/378/original/DSC_3159.jpg",
+        "image": "https://tse1.mm.bing.net/th/id/OIP.VhJ_8aDNg_1JjkuOzyh87AHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
     },
     {
         "slug": "sports",
         "title": "Казахская академия спорта и туризма",
         "description": "Подготовка спортсменов, тренеров и специалистов индустрии спорта мирового уровня.",
-        "image": "https://almaty.tv/storage/news/2018/07/26/1532588549196122.jpeg",
+        "image": "https://tse2.mm.bing.net/th/id/OIP.2Xt9ipdlx0nZ7VqdM7_4_QHaE6?rs=1&pid=ImgDetMain&o=7&rm=3",
     },
     {
         "slug": "arts",
         "title": "Казахская национальная академия искусств им. Т. К. Жургенова",
         "description": "Центр художественного образования: театр, кино, музыка, дизайн и анимация.",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Kazakh_National_Academy_of_Arts.jpg",
+        "image": "https://th.bing.com/th/id/R.387367e7f691cdc69b7fd58b693d1941?rik=y8fdWXONddr6qw&pid=ImgRaw&r=0",
     },
 ]
 
+UNIVERSITY_DATA = {university["slug"]: university for university in UNIVERSITY_LIST}
 
 def main_menu(request):
     return render(request, "MainMenu.html")
@@ -111,7 +112,12 @@ def university_detail(request, slug: str):
     template_name = UNIVERSITY_TEMPLATES.get(slug)
     if not template_name:
         raise Http404("Университет не найден")
-    return render(request, template_name)
+    university = UNIVERSITY_DATA.get(slug)
+    if not university:
+        raise Http404("Университет не найден")
+
+    context = {"university": university}
+    return render(request, template_name, context)
 
 
 def video_detail(request):
