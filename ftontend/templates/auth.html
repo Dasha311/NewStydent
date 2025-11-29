@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Вход и регистрация | NeXus{% endblock %}
+
+{% block extra_head %}
+<style>
+  .auth-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .auth-card {
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid var(--color-bg-secondary);
+    position: relative;
+  }
+  .auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+  .auth-subtitle { color: var(--color-text-secondary); margin-bottom: 2rem; }
+  .form-group { margin-bottom: 1.25rem; position: relative; }
+  .form-label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-text); }
+  .form-input {
+    width: 100%; padding: 0.875rem 1rem; border: 1px solid var(--color-border);
+    border-radius: 0.75rem; background-color: white; font-size: 1rem; transition: all 0.2s ease;
+  }
+  .form-input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(108, 77, 255, 0.1); }
+  .btn-primary {
+    width: 100%; background-color: var(--color-primary); color: white; border: none;
+    border-radius: 0.75rem; padding: 0.875rem 1.5rem; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: background-color 0.2s ease; position: relative; overflow: hidden;
+  }
+  .btn-primary:hover { background-color: var(--color-primary-light); }
+  .btn-primary:disabled { background-color: var(--color-text-secondary); cursor: not-allowed; }
+  .auth-divider { display: flex; align-items: center; margin: 1.5rem 0; color: var(--color-text-secondary); }
+  .auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background-color: var(--color-border); }
+  .auth-divider span { padding: 0 1rem; font-size: 0.875rem; }
+  .social-login { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+  .social-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 0.75rem;
+    background: white; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
+  }
+  .social-btn:hover { background-color: var(--color-bg); }
+  .auth-link { text-align: center; margin-top: 1.25rem; color: var(--color-text-secondary); }
+  .auth-link a { color: var(--color-primary); font-weight: 500; text-decoration: none; cursor: pointer; }
+  .auth-link a:hover { text-decoration: underline; }
+  .password-toggle {
+    position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--color-text-secondary); cursor: pointer;
+  }
+  .password-container { position: relative; }
+  .validation-message { font-size: 0.75rem; margin-top: 0.25rem; display: flex; align-items: center; gap: 0.25rem; }
+  .validation-success { color: var(--color-success); }
+  .validation-error { color: var(--color-error); }
+  .password-strength { margin-top: 0.5rem; }
+  .strength-bar { height: 4px; border-radius: 2px; background-color: var(--color-bg-secondary); overflow: hidden; margin-top: 0.25rem; }
+  .strength-fill { height: 100%; width: 0%; transition: width 0.3s ease, background-color 0.3s ease; }
+  .strength-weak { width: 33%; background-color: var(--color-error); }
+  .strength-medium { width: 66%; background-color: #F59E0B; }
+  .strength-strong { width: 100%; background-color: var(--color-success); }
+  .loader { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .loading .loader { opacity: 1; }
+  .loading .btn-text { opacity: 0; }
+  .message-box { border-radius: 0.75rem; padding: 0.75rem 1rem; background: #eef2ff; color: #312e81; border: 1px solid #c7d2fe; margin-bottom: 1rem; }
+  .error-box { border-radius: 0.75rem; padding: 0.75rem 1rem; background: #fef2f2; color: #991b1b; border: 1px solid #fecdd3; margin-bottom: 0.75rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container" data-show-register="{{ show_register|yesno:'true,false' }}">
+  {% if messages %}
+    <div class="max-w-xl w-full">
+      {% for message in messages %}
+        <div class="message-box">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div id="login-form" class="auth-card {% if show_register %}hidden{% else %}animate-fade-in-up{% endif %}">
+    <h1 class="auth-title">Вход в аккаунт</h1>
+    <p class="auth-subtitle">Введите свои данные для входа</p>
+
+    <div class="social-login">
+      <button class="social-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Google
+      </button>
+      <button class="social-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Facebook
+      </button>
+    </div>
+
+    <div class="auth-divider"><span>Или</span></div>
+
+    {% if login_form.non_field_errors %}
+      {% for error in login_form.non_field_errors %}
+        <div class="error-box">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form id="loginForm" method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="login">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Электронная почта</label>
+        <input type="email" id="login-email" name="email" class="form-input" placeholder="example@mail.ru" value="{{ login_form.email.value|default_if_none:'' }}" required>
+        {% if login_form.email.errors %}
+          {% for error in login_form.email.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login-password">Пароль</label>
+        <div class="password-container">
+          <input type="password" id="login-password" name="password" class="form-input" placeholder="Введите пароль" required>
+          <button type="button" class="password-toggle" id="toggleLoginPassword" aria-label="Показать пароль">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        {% if login_form.password.errors %}
+          {% for error in login_form.password.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="flex justify-between items-center mb-6">
+        <label class="flex items-center">
+          <input type="checkbox" class="rounded border-gray-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)]">
+          <span class="ml-2 text-sm">Запомнить меня</span>
+        </label>
+        <span class="text-sm text-[var(--color-primary)]">Забыли пароль?</span>
+      </div>
+
+      <button type="submit" class="btn-primary" id="login-submit">
+        <span class="btn-text">Войти</span>
+        <div class="loader" aria-hidden="true"></div>
+      </button>
+    </form>
+
+    <div class="auth-link">
+      <p>Еще нет аккаунта? <a id="switch-to-register" class="switch-form">Зарегистрироваться</a></p>
+    </div>
+  </div>
+
+  <div id="register-form" class="auth-card {% if show_register %}animate-fade-in-up{% else %}hidden{% endif %}">
+    <h1 class="auth-title">Создать аккаунт</h1>
+    <p class="auth-subtitle">Заполните данные для регистрации</p>
+
+    <div class="social-login">
+      <button class="social-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Google
+      </button>
+      <button class="social-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Facebook
+      </button>
+    </div>
+
+    <div class="auth-divider"><span>Или</span></div>
+
+    {% if register_form.non_field_errors %}
+      {% for error in register_form.non_field_errors %}
+        <div class="error-box">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form id="registerForm" method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="register">
+
+      <div class="form-group">
+        <label class="form-label" for="register-name">ФИО</label>
+        <input type="text" id="register-name" name="full_name" class="form-input" placeholder="Иванов Иван Иванович" value="{{ register_form.full_name.value|default_if_none:'' }}" required>
+        {% if register_form.full_name.errors %}
+          {% for error in register_form.full_name.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-email">Электронная почта</label>
+        <input type="email" id="register-email" name="email" class="form-input" placeholder="example@mail.ru" value="{{ register_form.email.value|default_if_none:'' }}" required>
+        {% if register_form.email.errors %}
+          {% for error in register_form.email.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-password">Пароль</label>
+        <div class="password-container">
+          <input type="password" id="register-password" name="password1" class="form-input" placeholder="Создайте надежный пароль" required>
+          <button type="button" class="password-toggle" id="toggleRegisterPassword" aria-label="Показать пароль">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        {% if register_form.password1.errors %}
+          {% for error in register_form.password1.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+        <div class="password-strength">
+          <div class="text-xs text-secondary">Надежность пароля:</div>
+          <div class="strength-bar">
+            <div id="password-strength-fill" class="strength-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-confirm-password">Подтверждение пароля</label>
+        <div class="password-container">
+          <input type="password" id="register-confirm-password" name="password2" class="form-input" placeholder="Повторите пароль" required>
+          <button type="button" class="password-toggle" id="toggleRegisterConfirmPassword" aria-label="Показать пароль">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        {% if register_form.password2.errors %}
+          {% for error in register_form.password2.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="mb-6">
+        <label class="flex items-start">
+          <input type="checkbox" id="register-terms" name="accept_terms" class="rounded border-gray-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)] mt-1" {% if register_form.accept_terms.value %}checked{% endif %}>
+          <span class="ml-2 text-sm">Я согласен с <span class="text-[var(--color-primary)]">условиями использования</span> и <span class="text-[var(--color-primary)]">политикой конфиденциальности</span></span>
+        </label>
+        {% if register_form.accept_terms.errors %}
+          {% for error in register_form.accept_terms.errors %}
+            <div class="validation-message validation-error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-primary" id="register-submit">
+        <span class="btn-text">Зарегистрироваться</span>
+        <div class="loader" aria-hidden="true"></div>
+      </button>
+    </form>
+
+    <div class="auth-link">
+      <p>Уже есть аккаунт? <a id="switch-to-login" class="switch-form">Войти</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  const loginFormCard = document.getElementById('login-form');
+  const registerFormCard = document.getElementById('register-form');
+  const switchToRegister = document.getElementById('switch-to-register');
+  const switchToLogin = document.getElementById('switch-to-login');
+  const authContainer = document.querySelector('.auth-container');
+
+  function setFormState(showRegister) {
+    if (!loginFormCard || !registerFormCard) return;
+    if (showRegister) {
+      loginFormCard.classList.add('hidden');
+      registerFormCard.classList.remove('hidden');
+    } else {
+      registerFormCard.classList.add('hidden');
+      loginFormCard.classList.remove('hidden');
+    }
+  }
+
+  const startWithRegister = authContainer?.dataset.showRegister === 'true';
+  setFormState(startWithRegister);
+
+  if (switchToRegister) {
+    switchToRegister.addEventListener('click', (event) => {
+      event.preventDefault();
+      setFormState(true);
+    });
+  }
+  if (switchToLogin) {
+    switchToLogin.addEventListener('click', (event) => {
+      event.preventDefault();
+      setFormState(false);
+    });
+  }
+
+  function setupPasswordToggle(toggleId, passwordId) {
+    const toggle = document.getElementById(toggleId);
+    const password = document.getElementById(passwordId);
+
+    if (toggle && password) {
+      toggle.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        if (type === 'password') {
+          this.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          `;
+        } else {
+          this.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          `;
+        }
+      });
+    }
+  }
+
+  function checkPasswordStrength(password) {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+    return strength;
+  }
+
+  function updatePasswordStrength(password) {
+    const strengthFill = document.getElementById('password-strength-fill');
+    if (!strengthFill) return;
+
+    const strength = checkPasswordStrength(password);
+    strengthFill.className = 'strength-fill';
+
+    if (password.length === 0) {
+      strengthFill.style.width = '0%';
+    } else if (strength <= 2) {
+      strengthFill.classList.add('strength-weak');
+    } else if (strength <= 4) {
+      strengthFill.classList.add('strength-medium');
+    } else {
+      strengthFill.classList.add('strength-strong');
+    }
+  }
+
+  setupPasswordToggle('toggleLoginPassword', 'login-password');
+  setupPasswordToggle('toggleRegisterPassword', 'register-password');
+  setupPasswordToggle('toggleRegisterConfirmPassword', 'register-confirm-password');
+
+  const registerPassword = document.getElementById('register-password');
+  if (registerPassword) {
+    registerPassword.addEventListener('input', function() {
+      updatePasswordStrength(this.value);
+    });
+  }
+</script>
+{% endblock %}

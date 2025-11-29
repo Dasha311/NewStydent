@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.main_menu, name="main_menu"),
     path("about/", views.about, name="about"),
     path("contacts/", views.contacts, name="contacts"),
+    path("auth/", views.auth_view, name="auth"),    
     path("universities/", views.course_view, name="course_view"),
     path("universities/<slug:slug>/", views.university_detail, name="university_detail"),
     path("videos/almaty-management-university/", views.video_detail, name="video_detail"),

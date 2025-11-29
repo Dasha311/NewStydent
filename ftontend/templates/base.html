@@ -89,9 +89,11 @@
           <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'course_view' or current_url == 'university_detail' %}text-[var(--color-primary)] font-semibold{% endif %}">ВУЗы</a>
           <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'about' %}text-[var(--color-primary)] font-semibold{% endif %}">О нас</a>
           <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'contacts' %}text-[var(--color-primary)] font-semibold{% endif %}">ИИ - ассистент</a>
-        {% endwith %}
+          <a href="{% url 'auth' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'auth' %}text-[var(--color-primary)] font-semibold{% endif %}">Вход</a>        
+          {% endwith %}
       </nav>
       <div class="hidden md:flex items-center gap-4">
+        <a href="{% url 'auth' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
         <a href="{% url 'course_view' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Каталог ВУЗов</a>
         <a href="{% url 'contacts' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Связаться</a>
       </div>
@@ -107,7 +109,9 @@
       <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
       <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
       <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
+      <a href="{% url 'auth' %}" class="hover:text-[var(--color-primary)]">Вход</a>      
       <div class="flex flex-col gap-4 mt-4">
+        <a href="{% url 'auth' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Войти</a>        
         <a href="{% url 'course_view' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Каталог ВУЗов</a>
         <a href="{% url 'contacts' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white w-full rounded-xl font-semibold transition py-3 text-center">Связаться</a>
       </div>

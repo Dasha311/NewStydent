@@ -1,6 +1,9 @@
+from django.contrib import messages
+from django.contrib.auth import login
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import redirect, render
+from .forms import LoginForm, RegistrationForm
 
 UNIVERSITY_TEMPLATES = {
     "kaznu": "university_kaznu.html",
@@ -129,6 +132,38 @@ def about(request):
 
 def contacts(request):
     return render(request, "contact.html")
+
+
+def auth_view(request):
+    show_register = request.GET.get("mode") == "register"
+    login_form = LoginForm(request=request)
+    register_form = RegistrationForm()
+
+    if request.method == "POST":
+        form_type = request.POST.get("form_type")
+        if form_type == "login":
+            login_form = LoginForm(request.POST, request=request)
+            register_form = RegistrationForm()
+            if login_form.is_valid():
+                login(request, login_form.get_user())
+                messages.success(request, "Вы успешно вошли в систему.")
+                return redirect("main_menu")
+        elif form_type == "register":
+            register_form = RegistrationForm(request.POST)
+            login_form = LoginForm(request=request)
+            show_register = True
+            if register_form.is_valid():
+                user = register_form.save()
+                login(request, user)
+                messages.success(request, "Регистрация прошла успешно!")
+                return redirect("main_menu")
+
+    context = {
+        "login_form": login_form,
+        "register_form": register_form,
+        "show_register": show_register,
+    }
+    return render(request, "auth.html", context)
 
 
 def course_view(request):
