@@ -83,39 +83,48 @@
       <a href="{% url 'main_menu' %}" class="flex items-center gap-3">
         <img src="{% static 'Icons/Logo.png' %}?v=2" alt="NeXus Logo" class="h-12 md:h-14" />
       </a>
+      {% with current_url=request.resolver_match.url_name %}      
       <nav class="hidden md:flex space-x-8 text-sm font-medium">
-        {% with current_url=request.resolver_match.url_name %}
           <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'main_menu' %}text-[var(--color-primary)] font-semibold{% endif %}">Главная</a>
           <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'course_view' or current_url == 'university_detail' %}text-[var(--color-primary)] font-semibold{% endif %}">ВУЗы</a>
           <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'about' %}text-[var(--color-primary)] font-semibold{% endif %}">О нас</a>
-          <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'contacts' %}text-[var(--color-primary)] font-semibold{% endif %}">ИИ - ассистент</a>
-          <a href="{% url 'auth' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'auth' %}text-[var(--color-primary)] font-semibold{% endif %}">Вход</a>        
+          <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)] {% if current_url == 'contacts' %}text-[var(--color-primary)] font-semibold{% endif %}">ИИ - ассистент</a>       
           {% endwith %}
       </nav>
       <div class="hidden md:flex items-center gap-4">
-        <a href="{% url 'auth' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Войти</a>
-        <a href="{% url 'course_view' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Каталог ВУЗов</a>
-        <a href="{% url 'contacts' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Связаться</a>
+        {% if current_url == 'university_detail' %}
+        <span class="text-[var(--color-primary)] text-sm font-medium opacity-60 cursor-not-allowed" aria-disabled="true">Регистрация</span>
+        <span class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-xl text-sm font-semibold transition opacity-60 cursor-not-allowed" aria-disabled="true">Вход</span>
+        {% else %}
+        <a href="{% url 'auth' %}?mode=register" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Регистрация</a>
+        <a href="{% url 'auth' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Вход</a>
+        {% endif %}
       </div>
+      {% endwith %}      
       <button id="mobile-btn" class="md:hidden" aria-label="Открыть меню" type="button" aria-expanded="false" aria-controls="mobile-menu">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
+    {% with current_url=request.resolver_match.url_name %}    
     <div id="mobile-menu-backdrop" tabindex="-1"></div>
     <nav id="mobile-menu" class="md:hidden flex flex-col px-6 pb-6 space-y-4 text-base font-medium bg-white border-t border-[var(--color-bg-secondary)] z-50 relative" aria-label="Мобильное меню">
       <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
       <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
       <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
-      <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
-      <a href="{% url 'auth' %}" class="hover:text-[var(--color-primary)]">Вход</a>      
+      <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>    
       <div class="flex flex-col gap-4 mt-4">
-        <a href="{% url 'auth' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Войти</a>        
-        <a href="{% url 'course_view' %}" class="text-[var(--color-primary)] hover:underline w-full text-center">Каталог ВУЗов</a>
-        <a href="{% url 'contacts' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white w-full rounded-xl font-semibold transition py-3 text-center">Связаться</a>
+        {% if current_url == 'university_detail' %}
+        <span class="text-[var(--color-primary)] w-full text-center text-sm font-medium opacity-60 cursor-not-allowed" aria-disabled="true">Регистрация</span>
+        <span class="bg-[var(--color-primary)] text-white w-full rounded-xl font-semibold transition py-3 text-center opacity-60 cursor-not-allowed" aria-disabled="true">Вход</span>
+        {% else %}
+        <a href="{% url 'auth' %}?mode=register" class="text-[var(--color-primary)] hover:underline w-full text-center">Регистрация</a>
+        <a href="{% url 'auth' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white w-full rounded-xl font-semibold transition py-3 text-center">Вход</a>
+        {% endif %}
       </div>
     </nav>
+    {% endwith %}    
   </header>
 
   <main class="flex-1">
