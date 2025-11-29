@@ -30,6 +30,9 @@ COURSE_ID_TO_SLUG = {
     "7": "german",
     "8": "sports",
     "9": "arts",
+    "10": "almau",
+    "11": "nu",
+    "12": "kbtu",    
 }
 
 UNIVERSITY_LIST = [
