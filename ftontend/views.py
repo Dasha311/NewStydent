@@ -17,7 +17,9 @@ UNIVERSITY_TEMPLATES = {
     "arts": "university_arts.html",
     "almau": "university_almau.html",
     "nu": "university_nu.html",
-    "kbtu": "university_kbtu.html",    
+    "kbtu": "university_kbtu.html",
+    "auezov": "university_auezov.html",
+    "buketov": "university_buketov.html",    
 }
 
 COURSE_ID_TO_SLUG = {
@@ -118,8 +120,23 @@ UNIVERSITY_LIST = [
         "title": "Казахстанско-Британский Технический Университет",
         "description": "Ведущий технический вуз Казахстана с сильными программами в области IT, инженерии и энергетики.",
         "image": "https://th.bing.com/th/id/R.8a9e84a375233bde57ac81c71c7ea967?rik=2DxCpttiUCRyQw&pid=ImgRaw&r=0",
-        "city": "Алматы",        
+        "city": "Алматы",
     },
+    {
+        "slug": "auezov",
+        "title": "Южно-Казахстанский университет им. М. Ауэзова",
+        "description": "Крупнейший университет юга Казахстана с сильными инженерными, аграрными и гуманитарными программами.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2a/M.Auezov_South_Kazakhstan_University.jpg",
+        "city": "Шымкент",        
+    },
+    {
+        "slug": "buketov",
+        "title": "Карагандинский университет им. Е. А. Букетова",
+        "description": "Классический университет Центрального Казахстана с акцентом на фундаментальные науки и педагогическое образование.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Karaganda_State_University.jpg/1200px-Karaganda_State_University.jpg",
+        "city": "Караганда",
+    },
+
     
 ]
 
