@@ -270,7 +270,50 @@
       const clearChatButton = document.getElementById('clear-chat');
 
       const stopWords = ['и', 'в', 'на', 'по', 'ли', 'это', 'а', 'к', 'у', 'за', 'то', 'же', 'от', 'с', 'без'];
-      
+      const SESSION_STORAGE_KEY = 'nexus_session_id';
+
+      function generateSessionId() {
+        if (window.crypto?.randomUUID) {
+          return crypto.randomUUID();
+        }
+        return `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      function getSessionId(forceNew = false) {
+        if (forceNew || !localStorage.getItem(SESSION_STORAGE_KEY)) {
+          const newId = generateSessionId();
+          localStorage.setItem(SESSION_STORAGE_KEY, newId);
+          return newId;
+        }
+        return localStorage.getItem(SESSION_STORAGE_KEY);
+      }
+
+      let sessionId = getSessionId();
+
+      function renderStoredMessage(message) {
+        if (!message?.content) return;
+        const msg = document.createElement('div');
+        msg.className = `message ${message.role === 'user' ? 'user-message' : 'bot-message'} animate-fade-in`;
+        msg.textContent = message.content;
+        chatContainer.appendChild(msg);
+      }
+
+      async function loadChatHistory() {
+        try {
+          const response = await fetch(`/api/chat/?session_id=${encodeURIComponent(sessionId)}`);
+          if (!response.ok) throw new Error('Failed to load history');
+          const data = await response.json();
+          if (Array.isArray(data.messages) && data.messages.length) {
+            chatContainer.innerHTML = '';
+            data.messages.forEach(renderStoredMessage);
+            chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+            return;
+          }
+        } catch (error) {
+          console.warn('Chat history unavailable', error);
+        }
+        createNewChat();
+      }      
       // БАЗА ДАННЫХ УНИВЕРСИТЕТОВ КАЗАХСТАНА
       const universities = {
         "kaznu": {
@@ -1288,7 +1331,28 @@
         }
       }
 
-      function createNewChat() {
+      async function persistSessionMessages(messagesToSave) {
+        if (!messagesToSave.length) return;
+
+        try {
+          await fetch('/api/chat/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              session_id: sessionId,
+              messages: messagesToSave,
+            }),
+          });
+        } catch (error) {
+          console.warn('Failed to persist chat', error);
+        }
+      }
+
+      function createNewChat(resetSession = false) {
+        if (resetSession) {
+          sessionId = getSessionId(true);
+        }
+
         // Очищаем контейнер чата
         chatContainer.innerHTML = '';
         
@@ -1355,6 +1419,8 @@
           chatContainer.appendChild(userMsg);
         }
 
+        const messagesToPersist = message ? [{ role: 'user', content: message }] : [];
+
         // Add media if any
         if (hasMedia) {
           pendingMedia.forEach(media => {
@@ -1382,11 +1448,14 @@
             botMsg.className = 'message bot-message animate-fade-in';
             botMsg.textContent = answer;
             chatContainer.appendChild(botMsg);
+
+            messagesToPersist.push({ role: 'bot', content: answer });   
             
             requestAnimationFrame(() => {
               chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
             });
           }
+          persistSessionMessages(messagesToPersist);          
         }, 500);
       }
 
@@ -1394,7 +1463,7 @@
       chatFileInput.addEventListener('change', handleFileInput);
       cancelMediaButton.addEventListener('click', clearMediaPreview);
       chatForm.addEventListener('submit', handleChatSubmit);
-      clearChatButton.addEventListener('click', createNewChat);
+      clearChatButton.addEventListener('click', () => createNewChat(true));
 
       chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -1403,8 +1472,8 @@
         }
       });
 
-      // Создаем новый чат при каждой загрузке страницы
-      createNewChat();
+      // Создаем новый чат или загружаем историю при загрузке страницы
+      loadChatHistory();
     });
   </script>
 {% endblock %}

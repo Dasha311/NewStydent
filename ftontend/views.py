@@ -1,9 +1,14 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth import login
 from django.core.paginator import Paginator
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from .forms import LoginForm, RegistrationForm
+from .models import ChatMessage
 
 UNIVERSITY_TEMPLATES = {
     "kaznu": "university_kaznu.html",
@@ -452,6 +457,59 @@ for university in UNIVERSITY_LIST:
 
 UNIVERSITY_DATA = {university["slug"]: university for university in UNIVERSITY_LIST}
 
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+def chat_api(request):
+    if request.method == "GET":
+        session_id = request.GET.get("session_id")
+        if not session_id:
+            return JsonResponse({"error": "session_id is required"}, status=400)
+
+        messages = ChatMessage.objects.filter(session_id=session_id)
+        return JsonResponse({"messages": [message.as_dict() for message in messages]})
+
+    try:
+        payload = json.loads(request.body.decode("utf-8")) if request.body else {}
+    except (TypeError, ValueError):
+        payload = {}
+
+    session_id = payload.get("session_id")
+    if not session_id:
+        return JsonResponse({"error": "session_id is required"}, status=400)
+
+    messages_payload = payload.get("messages")
+    saved_messages = []
+
+    if isinstance(messages_payload, list):
+        for item in messages_payload:
+            if not isinstance(item, dict):
+                continue
+            content = (item.get("content") or "").strip()
+            role = (item.get("role") or "user").strip() or "user"
+            if content:
+                saved_messages.append(
+                    ChatMessage.objects.create(
+                        session_id=session_id,
+                        role=role,
+                        content=content,
+                    )
+                )
+    else:
+        content = (payload.get("message") or "").strip()
+        role = (payload.get("role") or "user").strip() or "user"
+        if content:
+            saved_messages.append(
+                ChatMessage.objects.create(
+                    session_id=session_id,
+                    role=role,
+                    content=content,
+                )
+            )
+
+    history = ChatMessage.objects.filter(session_id=session_id)
+    status_code = 201 if saved_messages else 200
+    return JsonResponse({"messages": [message.as_dict() for message in history]}, status=status_code)
 def main_menu(request):
     return render(request, "MainMenu.html")
 
