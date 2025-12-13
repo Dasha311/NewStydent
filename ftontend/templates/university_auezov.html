@@ -1,193 +1,32 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}ЮКУ им. М. Ауэзова - NeXus{% endblock %}
-
-{% block content %}
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-emerald-600 to-lime-700 text-white py-16">
-    <div class="max-w-7xl mx-auto px-6">
-      <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
-        ← Назад к ВУЗам
-      </a>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h1 class="text-4xl md:text-6xl font-bold mb-4">ЮКУ им. М. Ауэзова</h1>
-          <p class="text-xl mb-6 opacity-90">Флагманское образование юга Казахстана</p>
-          <div class="flex flex-wrap gap-4 text-sm">
-            <span class="bg-white/20 px-4 py-2 rounded-full">📍 Шымкент, Казахстан</span>
-            <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1943</span>
-            <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Многопрофильный университет</span>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
-            <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
-            <div class="space-y-3 text-sm">
-              <div class="flex justify-between">
-                <span>Тип:</span>
-                <span class="font-semibold">Государственный университет</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Языки обучения:</span>
-                <span class="font-semibold">Казахский, Русский, Английский</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Рейтинг:</span>
-                <span class="font-semibold">★ 4.5/5</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Студентов:</span>
-                <span class="font-semibold">~18,000</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- University Visual -->
-  <section class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
-    <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/60">
-      <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-80 md:h-96 object-cover" />
-    </div>
-  </section>
-
-  <!-- University Details -->
-  <section class="max-w-7xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Main Content -->
-      <div class="lg:col-span-2 space-y-12">
-        <!-- About University -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Об университете</h2>
-          <div class="space-y-4 text-lg leading-relaxed">
-            <p><strong>Южно-Казахстанский университет имени М. Ауэзова</strong> — крупный научно-образовательный центр региона, сочетающий инженерные, аграрные и гуманитарные направления.</p>
-            <p>Университет активно развивает международное сотрудничество, программы академической мобильности и прикладные исследования для региональной экономики.</p>
-            <p>Студенты получают поддержку через инкубаторы, лаборатории и практики на предприятиях юга Казахстана.</p>
-          </div>
-        </div>
-
-        <!-- Academic Programs -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-emerald-50 rounded-2xl p-6">
-              <h3 class="text-xl font-semibold mb-4 text-emerald-800">⚙️ Инженерные и технические науки</h3>
-              <ul class="space-y-2 text-emerald-700">
-                <li>• Автоматизация и робототехника</li>
-                <li>• Химическая технология</li>
-                <li>• Строительство и архитектура</li>
-                <li>• Энергетика</li>
-                <li>• Информационные системы</li>
-              </ul>
-            </div>
-            <div class="bg-lime-50 rounded-2xl p-6">
-              <h3 class="text-xl font-semibold mb-4 text-lime-800">🌿 Аграрные и гуманитарные направления</h3>
-              <ul class="space-y-2 text-lime-700">
-                <li>• Агрономия и пищевые технологии</li>
-                <li>• Экономика и менеджмент</li>
-                <li>• Педагогика и психология</li>
-                <li>• Филология</li>
-                <li>• Туризм и сервис</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Infrastructure -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Кампус и возможности</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🏛️</span>
-                <div>
-                  <h4 class="font-semibold">Главный кампус</h4>
-                  <p class="text-secondary text-sm">Центр города, современная инфраструктура</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🔬</span>
-                <div>
-                  <h4 class="font-semibold">Лаборатории и НИИ</h4>
-                  <p class="text-secondary text-sm">Прикладные исследования для агро и индустрии</p>
-                </div>
-              </div>
-            </div>
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🤝</span>
-                <div>
-                  <h4 class="font-semibold">Партнерства</h4>
-                  <p class="text-secondary text-sm">Программы с предприятиями Шымкента</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🏟️</span>
-                <div>
-                  <h4 class="font-semibold">Спортивные объекты</h4>
-                  <p class="text-secondary text-sm">Стадион, бассейн и залы для сборных</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="space-y-6">
-        <!-- Contact Info -->
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Контакты</h3>
-          <div class="space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">📍</span>
-              <div>
-                <p class="font-medium">Адрес</p>
-                <p class="text-sm text-secondary">пр. Тауке хана, 5, Шымкент</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">📞</span>
-              <div>
-                <p class="font-medium">Телефон</p>
-                <p class="text-sm text-secondary">+7 (7252) 21-19-80</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">🌐</span>
-              <div>
-                <p class="font-medium">Сайт</p>
-                <a href="https://auezov.edu.kz" class="text-sm text-emerald-700 hover:underline">auezov.edu.kz</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Facts -->
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
-          <div class="space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="text-green-600 text-xl">✓</span>
-              <span class="text-sm">Сильные инженерные и аграрные программы</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-green-600 text-xl">✓</span>
-              <span class="text-sm">Практики и стажировки в региональных компаниях</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-green-600 text-xl">✓</span>
-              <span class="text-sm">Современные лаборатории и инкубаторы</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-green-600 text-xl">✓</span>
-              <span class="text-sm">Активная студенческая жизнь в Шымкенте</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+{% extends "university_layout_base.html" %}
+{% block title %}ЮКУ им. М. Ауэзова — NeXus{% endblock %}
+{% block hero_gradient %}from-green-700 to-emerald-800{% endblock %}
+{% block hero_title %}Южно-Казахстанский университет им. М. Ауэзова{% endblock %}
+{% block hero_subtitle %}Крупнейший университет юга Казахстана с инженерными и аграрными программами{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Шымкент</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">🌾 Аграрные и инженерные науки</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Развитая инфраструктура</span>
+{% endblock %}
+{% block about_content %}
+<p>Университет сочетает инженерные, аграрные и гуманитарные программы, поддерживая прикладные исследования.</p>
+<p>Кампус включает лаборатории, теплицы и центры инноваций для региона.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-emerald-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-emerald-800">🌱 Аграрные направления</h3>
+  <ul class="space-y-2 text-emerald-700">
+    <li>• Агроинженерия</li>
+    <li>• Биотехнологии</li>
+    <li>• Экология и природопользование</li>
+  </ul>
+</div>
+<div class="bg-teal-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-teal-800">🏗️ Инженерия</h3>
+  <ul class="space-y-2 text-teal-700">
+    <li>• Строительство и архитектура</li>
+    <li>• Химическая технология</li>
+    <li>• Информационные системы</li>
+  </ul>
+</div>
 {% endblock %}

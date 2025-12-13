@@ -1,36 +1,32 @@
-{% extends "base.html" %}
-{% block title %}{{ university.title }} — NeXus{% endblock %}
-{% block content %}
-<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
-  <header>
-    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Алматы</p>
-    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
-    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
-  </header>
-
-  <div class="rounded-3xl overflow-hidden shadow-xl">
-    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
-  </div>
-
-  <div class="grid gap-8 md:grid-cols-2">
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Почему стоит выбрать ALMAU</h2>
-      <p class="text-secondary text-base">Университет известен своей предпринимательской экосистемой, акселераторами и международными аккредитациями бизнес-программ. Здесь упор делается на проектное обучение и ESG-повестку.</p>
-    </article>
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Направления подготовки</h2>
-      <ul class="text-secondary space-y-2 list-disc list-inside">
-        <li>Бизнес-администрирование и финансы</li>
-        <li>Маркетинг и digital-коммуникации</li>
-        <li>Менеджмент в креативных индустриях</li>
-        <li>IT-менеджмент и аналитика данных</li>
-      </ul>
-    </article>
-  </div>
-
-  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
-    <h2 class="text-2xl font-semibold mb-4">Студенческая жизнь</h2>
-    <p class="text-secondary">ALMAU развивает сообщество стартапов, студенческих клубов и международных обменов. Кампус расположен в деловом районе Алматы, что позволяет совмещать обучение со стажировками в ведущих компаниях.</p>
-  </div>
-</section>
+{% extends "university_layout_base.html" %}
+{% block title %}Almaty Management University — NeXus{% endblock %}
+{% block hero_gradient %}from-amber-600 to-orange-700{% endblock %}
+{% block hero_title %}Almaty Management University (AlmaU){% endblock %}
+{% block hero_subtitle %}Предпринимательский университет с акцентом на бизнес и ESG{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">💡 Предпринимательство</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">🌱 ESG и устойчивость</span>
+{% endblock %}
+{% block about_content %}
+<p>AlmaU развивает бизнес-образование, предпринимательскую экосистему и проектное обучение с международными аккредитациями.</p>
+<p>Студенты участвуют в акселераторах, стартап-лабораториях и получают поддержку наставников.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-orange-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-orange-800">📈 Бизнес-направления</h3>
+  <ul class="space-y-2 text-orange-700">
+    <li>• Бизнес-администрирование и финансы</li>
+    <li>• Маркетинг и digital</li>
+    <li>• Менеджмент в креативных индустриях</li>
+  </ul>
+</div>
+<div class="bg-emerald-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-emerald-800">💻 Технологии</h3>
+  <ul class="space-y-2 text-emerald-700">
+    <li>• IT-менеджмент и аналитика данных</li>
+    <li>• Проектное управление</li>
+    <li>• ESG-проекты</li>
+  </ul>
+</div>
 {% endblock %}

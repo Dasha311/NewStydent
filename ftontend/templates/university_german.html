@@ -1,195 +1,100 @@
-{% extends "base.html" %}
+{% extends "university_layout_base.html" %}
 {% load static %}
 {% block title %}Казахстанско-Немецкий университет - NeXus{% endblock %}
 
-{% block content %}
-      <!-- Hero Section -->
-      <section class="bg-gradient-to-r from-yellow-600 to-yellow-800 text-white py-16">
-        <div class="max-w-7xl mx-auto px-6">
-          <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
-            ← Назад к ВУЗам
-          </a>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 class="text-4xl md:text-6xl font-bold mb-4">Казахстанско-Немецкий университет</h1>
-              <p class="text-xl mb-6 opacity-90">Мост между культурами и образовательными системами</p>
-              <div class="flex flex-wrap gap-4 text-sm">
-                <span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы, Казахстан</span>
-                <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1999</span>
-                <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Немецкие стандарты</span>
-              </div>
-            </div>
-            <div class="flex justify-center">
-              <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
-                <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
-                <div class="space-y-3 text-sm">
-                  <div class="flex justify-between">
-                    <span>Тип:</span>
-                    <span class="font-semibold">Международный университет</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span>Языки обучения:</span>
-                    <span class="font-semibold">Немецкий, Английский, Русский</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span>Рейтинг:</span>
-                    <span class="font-semibold">★ 4.7/5</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span>Студентов:</span>
-                    <span class="font-semibold">~1,500</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
-      <!-- University Visual -->
-    <section class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
-      <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/60">
-        <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-80 md:h-96 object-cover" />
-      </div>
-    </section>
+{% block hero_gradient %}from-yellow-600 to-yellow-800{% endblock %}
+{% block hero_title %}Казахстанско-Немецкий университет{% endblock %}
+{% block hero_subtitle %}Мост между культурами и образовательными системами{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы, Казахстан</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1999</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Немецкие стандарты</span>
+{% endblock %}
+{% block key_info %}
+<div class="flex justify-between"><span>Тип:</span><span class="font-semibold">Международный университет</span></div>
+<div class="flex justify-between"><span>Языки обучения:</span><span class="font-semibold">Немецкий, Английский, Русский</span></div>
+<div class="flex justify-between"><span>Рейтинг:</span><span class="font-semibold">★ 4.7/5</span></div>
+<div class="flex justify-between"><span>Студентов:</span><span class="font-semibold">~1,500</span></div>
+{% endblock %}
 
-    <!-- University Details -->
-      <section class="max-w-7xl mx-auto px-6 py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Main Content -->
-          <div class="lg:col-span-2 space-y-12">
-  
-            <!-- About University -->
-            <div class="bg-white rounded-2xl shadow-lg p-8">
-              <h2 class="text-3xl font-bold mb-6">Об университете</h2>
-              <div class="space-y-4 text-lg leading-relaxed">
-                <p><strong>Казахстанско-Немецкий университет (DKU)</strong> — уникальное образовательное учреждение, созданное при поддержке правительств Казахстана и Германии.</p>
-                <p>Основан в 1999 году как совместный проект двух стран. Университет сочетает немецкие образовательные стандарты с казахстанскими традициями.</p>
-                <p>DKU готовит специалистов, способных работать в международной среде и способствующих развитию сотрудничества между Казахстаном и Германией.</p>
-              </div>
-            </div>
-  
-            <!-- Academic Programs -->
-            <div class="bg-white rounded-2xl shadow-lg p-8">
-              <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-yellow-50 rounded-2xl p-6">
-                  <h3 class="text-xl font-semibold mb-4 text-yellow-800">🎓 Технические науки</h3>
-                  <ul class="space-y-2 text-yellow-700">
-                    <li>• Информационные системы</li>
-                    <li>• Энергетическая инженерия</li>
-                    <li>• Логистика</li>
-                    <li>• Экологический менеджмент</li>
-                    <li>• Промышленная инженерия</li>
-                  </ul>
-                </div>
-                <div class="bg-blue-50 rounded-2xl p-6">
-                  <h3 class="text-xl font-semibold mb-4 text-blue-800">📚 Социальные науки</h3>
-                  <ul class="space-y-2 text-blue-700">
-                    <li>• Международные отношения</li>
-                    <li>• Экономика</li>
-                    <li>• Политология</li>
-                    <li>• Культурология</li>
-                    <li>• Социология</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-              <!-- Infrastructure -->
-            <div class="bg-white rounded-2xl shadow-lg p-8">
-              <h2 class="text-3xl font-bold mb-6">Кампус и международные связи</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                  <div class="flex items-start gap-3">
-                    <span class="text-2xl">🏛️</span>
-                    <div>
-                      <h4 class="font-semibold">Немецкий кампус</h4>
-                      <p class="text-secondary text-sm">Европейские стандарты</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start gap-3">
-                    <span class="text-2xl">🌍</span>
-                    <div>
-                      <h4 class="font-semibold">Международные программы</h4>
-                      <p class="text-secondary text-sm">Обмен с Германией</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="space-y-4">
-                  <div class="flex items-start gap-3">
-                    <span class="text-2xl">📚</span>
-                    <div>
-                      <h4 class="font-semibold">Немецкая библиотека</h4>
-                      <p class="text-secondary text-sm">Литература на немецком</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start gap-3">
-                    <span class="text-2xl">💼</span>
-                    <div>
-                      <h4 class="font-semibold">Карьерный центр</h4>
-                      <p class="text-secondary text-sm">Немецкие компании</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- Sidebar -->
-          <div class="space-y-6">
-            <!-- Contact Info -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-              <h3 class="text-xl font-semibold mb-4">Контакты</h3>
-              <div class="space-y-3">
-                <div class="flex items-center gap-3">
-                  <span class="text-2xl">📍</span>
-                  <div>
-                    <p class="font-medium">Адрес</p>
-                    <p class="text-sm text-secondary">ул. Пушкина, 111/113, Алматы</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-2xl">📞</span>
-                  <div>
-                    <p class="font-medium">Телефон</p>
-                    <p class="text-sm text-secondary">+7 (727) 355-05-51</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-2xl">🌐</span>
-                  <div>
-                    <p class="font-medium">Сайт</p>
-                    <a href="https://dku.kz" class="text-sm text-blue-600 hover:underline">dku.kz</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <!-- Quick Facts -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-              <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
-              <div class="space-y-3">
-                <div class="flex items-center gap-3">
-                  <span class="text-green-600 text-xl">✓</span>
-                  <span class="text-sm">Немецкие образовательные стандарты</span>
-                </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-green-600 text-xl">✓</span>
-                  <span class="text-sm">Двойные дипломы</span>
-                </div>
-              </div>
-                              <div class="flex items-center gap-3">
-                  <span class="text-green-600 text-xl">✓</span>
-                  <span class="text-sm">Международные стажировки</span>
-                </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-green-600 text-xl">✓</span>
-                  <span class="text-sm">Немецкий язык с носителями</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-  
+{% block about_content %}
+<p><strong>Казахстанско-Немецкий университет (DKU)</strong> — совместный проект Казахстана и Германии, объединяющий европейские стандарты и местный контекст.</p>
+<p>Университет готовит специалистов, способных работать в международной среде, и развивает сотрудничество между странами через обменные программы и стажировки.</p>
+{% endblock %}
+
+{% block faculty_columns %}
+<div class="bg-yellow-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-yellow-800">🎓 Технические науки</h3>
+  <ul class="space-y-2 text-yellow-700">
+    <li>• Информационные системы</li>
+    <li>• Энергетическая инженерия</li>
+    <li>• Логистика и промышленная инженерия</li>
+  </ul>
+</div>
+<div class="bg-blue-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-blue-800">📚 Социальные науки</h3>
+  <ul class="space-y-2 text-blue-700">
+    <li>• Международные отношения</li>
+    <li>• Экономика и менеджмент</li>
+    <li>• Культурология и социология</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block campus_features %}
+<div class="space-y-4">
+  <div class="flex items-start gap-3">
+    <span class="text-2xl">🏛️</span>
+    <div>
+      <h4 class="font-semibold">Немецкий кампус</h4>
+      <p class="text-secondary text-sm">Европейские стандарты обучения</p>
+    </div>
+  </div>
+  <div class="flex items-start gap-3">
+    <span class="text-2xl">🌍</span>
+    <div>
+      <h4 class="font-semibold">Международные программы</h4>
+      <p class="text-secondary text-sm">Обмен с университетами Германии</p>
+    </div>
+  </div>
+</div>
+<div class="space-y-4">
+  <div class="flex items-start gap-3">
+    <span class="text-2xl">📚</span>
+    <div>
+      <h4 class="font-semibold">Немецкая библиотека</h4>
+      <p class="text-secondary text-sm">Литература на немецком и английском</p>
+    </div>
+  </div>
+  <div class="flex items-start gap-3">
+    <span class="text-2xl">💼</span>
+    <div>
+      <h4 class="font-semibold">Карьерный центр</h4>
+      <p class="text-secondary text-sm">Стажировки в немецких компаниях</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block contact_info %}
+<div class="flex items-center gap-3">
+  <span class="text-2xl">📍</span>
+  <div>
+    <p class="font-medium">Адрес</p>
+    <p class="text-sm text-secondary">ул. Пушкина, 111/113, Алматы</p>
+  </div>
+</div>
+<div class="flex items-center gap-3">
+  <span class="text-2xl">🌐</span>
+  <div>
+    <p class="font-medium">Сайт</p>
+    <a href="https://dku.kz" class="text-sm text-blue-700 hover:underline">dku.kz</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block perks %}
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Немецкие образовательные стандарты</span></div>
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Двойные дипломы и стажировки</span></div>
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Поддержка носителей языка</span></div>
 {% endblock %}

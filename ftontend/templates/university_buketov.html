@@ -1,193 +1,32 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Карагандинский университет им. Е. А. Букетова - NeXus{% endblock %}
-
-{% block content %}
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-blue-800 to-slate-800 text-white py-16">
-    <div class="max-w-7xl mx-auto px-6">
-      <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
-        ← Назад к ВУЗам
-      </a>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h1 class="text-4xl md:text-6xl font-bold mb-4">Карагандинский университет им. Е. А. Букетова</h1>
-          <p class="text-xl mb-6 opacity-90">Центр фундаментальной науки Центрального Казахстана</p>
-          <div class="flex flex-wrap gap-4 text-sm">
-            <span class="bg-white/20 px-4 py-2 rounded-full">📍 Караганда, Казахстан</span>
-            <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1972</span>
-            <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Классический университет</span>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
-            <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
-            <div class="space-y-3 text-sm">
-              <div class="flex justify-between">
-                <span>Тип:</span>
-                <span class="font-semibold">Государственный университет</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Языки обучения:</span>
-                <span class="font-semibold">Казахский, Русский</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Рейтинг:</span>
-                <span class="font-semibold">★ 4.4/5</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Студентов:</span>
-                <span class="font-semibold">~16,000</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- University Visual -->
-  <section class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
-    <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/60">
-      <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-80 md:h-96 object-cover" />
-    </div>
-  </section>
-
-  <!-- University Details -->
-  <section class="max-w-7xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Main Content -->
-      <div class="lg:col-span-2 space-y-12">
-        <!-- About University -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Об университете</h2>
-          <div class="space-y-4 text-lg leading-relaxed">
-            <p><strong>Карагандинский университет имени академика Е. А. Букетова</strong> готовит специалистов в области естественных, общественных и педагогических наук.</p>
-            <p>Вуз активно развивает научные школы, студенческие стартапы и проекты для горно-металлургического и энергетического кластеров региона.</p>
-            <p>Кампус расположен в центре Караганды, что обеспечивает удобную инфраструктуру и доступ к городским культурным площадкам.</p>
-          </div>
-        </div>
-
-        <!-- Academic Programs -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-sky-50 rounded-2xl p-6">
-              <h3 class="text-xl font-semibold mb-4 text-sky-800">🔬 Естественные науки</h3>
-              <ul class="space-y-2 text-sky-700">
-                <li>• Физика и нанотехнологии</li>
-                <li>• Химия и экология</li>
-                <li>• Биология и биотехнология</li>
-                <li>• География и геоинформатика</li>
-                <li>• Информационные технологии</li>
-              </ul>
-            </div>
-            <div class="bg-slate-50 rounded-2xl p-6">
-              <h3 class="text-xl font-semibold mb-4 text-slate-800">📚 Социально-гуманитарные направления</h3>
-              <ul class="space-y-2 text-slate-700">
-                <li>• Юриспруденция и международное право</li>
-                <li>• Экономика и менеджмент</li>
-                <li>• Педагогика и психология</li>
-                <li>• История и философия</li>
-                <li>• Лингвистика и перевод</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Infrastructure -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-3xl font-bold mb-6">Кампус и исследования</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🏛️</span>
-                <div>
-                  <h4 class="font-semibold">Учебные корпуса</h4>
-                  <p class="text-secondary text-sm">Лекции и лаборатории в центре города</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🧪</span>
-                <div>
-                  <h4 class="font-semibold">Научные лаборатории</h4>
-                  <p class="text-secondary text-sm">Проекты по экологии и материалам</p>
-                </div>
-              </div>
-            </div>
-            <div class="space-y-4">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🤝</span>
-                <div>
-                  <h4 class="font-semibold">Партнерства</h4>
-                  <p class="text-secondary text-sm">Сотрудничество с предприятиями Караганды</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🎭</span>
-                <div>
-                  <h4 class="font-semibold">Студенческая жизнь</h4>
-                  <p class="text-secondary text-sm">Творческие клубы, спорт и волонтерство</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="space-y-6">
-        <!-- Contact Info -->
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Контакты</h3>
-          <div class="space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">📍</span>
-              <div>
-                <p class="font-medium">Адрес</p>
-                <p class="text-sm text-secondary">ул. Университетская, 28, Караганда</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">📞</span>
-              <div>
-                <p class="font-medium">Телефон</p>
-                <p class="text-sm text-secondary">+7 (7212) 77-03-53</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">🌐</span>
-              <div>
-                <p class="font-medium">Сайт</p>
-                <a href="https://ksu.kz" class="text-sm text-blue-200 hover:underline">ksu.kz</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Facts -->
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
-          <div class="space-y-3">
-            <div class="flex items-center gap-3">
-              <span class="text-indigo-600 text-xl">✓</span>
-              <span class="text-sm">Фундаментальные научные школы</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-indigo-600 text-xl">✓</span>
-              <span class="text-sm">Проекты для горно-металлургического комплекса</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-indigo-600 text-xl">✓</span>
-              <span class="text-sm">Развитая студенческая инфраструктура</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-indigo-600 text-xl">✓</span>
-              <span class="text-sm">Программы двойного диплома и обмена</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+{% extends "university_layout_base.html" %}
+{% block title %}Карагандинский университет им. Е. А. Букетова — NeXus{% endblock %}
+{% block hero_gradient %}from-amber-800 to-brown-700{% endblock %}
+{% block hero_title %}Карагандинский университет им. Е. А. Букетова{% endblock %}
+{% block hero_subtitle %}Классический университет Центрального Казахстана с сильными фундаментальными школами{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Караганда</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">📚 Фундаментальные науки</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Педагогическое образование</span>
+{% endblock %}
+{% block about_content %}
+<p>Университет развивает фундаментальные науки, педагогические программы и исследования в центре Казахстана.</p>
+<p>Студенты вовлечены в научные проекты, социальные инициативы и региональные образовательные программы.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-amber-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-amber-800">📐 Фундаментальные науки</h3>
+  <ul class="space-y-2 text-amber-700">
+    <li>• Физика и математика</li>
+    <li>• Химия и биология</li>
+    <li>• География</li>
+  </ul>
+</div>
+<div class="bg-stone-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-stone-800">🏫 Педагогика и гуманитарные науки</h3>
+  <ul class="space-y-2 text-stone-700">
+    <li>• Педагогика и психология</li>
+    <li>• История и право</li>
+    <li>• Филология</li>
+  </ul>
+</div>
 {% endblock %}

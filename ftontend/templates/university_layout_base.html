@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% block hero_section %}
+<div class="bg-gradient-to-r {% block hero_gradient %}from-blue-700 to-blue-900{% endblock %} text-white py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
+      ← Назад к ВУЗам
+    </a>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">{% block hero_title %}{{ university.title }}{% endblock %}</h1>
+        <p class="text-xl mb-6 opacity-90">{% block hero_subtitle %}{{ university.description }}{% endblock %}</p>
+        <div class="flex flex-wrap gap-4 text-sm">
+          {% block hero_badges %}
+          <span class="bg-white/20 px-4 py-2 rounded-full">📍 {{ university.city|default:"Казахстан" }}</span>
+          <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Современные программы</span>
+          {% endblock %}
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
+          <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
+          <div class="space-y-3 text-sm">
+            {% block key_info %}
+            <div class="flex justify-between">
+              <span>Тип:</span>
+              <span class="font-semibold">Университет</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Языки обучения:</span>
+              <span class="font-semibold">Казахский, Русский, Английский</span>
+            </div>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<section class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
+  <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/60">
+    {% block hero_image %}
+    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-80 md:h-96 object-cover" />
+    {% endblock %}
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 space-y-12">
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold mb-6">Об университете</h2>
+        <div class="space-y-4 text-lg leading-relaxed">
+          {% block about_content %}
+          <p>{{ university.description }}</p>
+          <p>Учебные планы обновляются с учётом требований рынка труда и инновационных подходов.</p>
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold mb-6">Факультеты и направления</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% block faculty_columns %}
+          <div class="bg-blue-50 rounded-2xl p-6">
+            <h3 class="text-xl font-semibold mb-4 text-blue-800">🎓 Академические программы</h3>
+            <ul class="space-y-2 text-blue-700">
+              <li>• Технические специальности</li>
+              <li>• Социальные науки</li>
+              <li>• Гуманитарные программы</li>
+            </ul>
+          </div>
+          <div class="bg-indigo-50 rounded-2xl p-6">
+            <h3 class="text-xl font-semibold mb-4 text-indigo-800">📚 Дополнительное образование</h3>
+            <ul class="space-y-2 text-indigo-700">
+              <li>• Магистратура и PhD</li>
+              <li>• Международные программы</li>
+              <li>• Центры повышения квалификации</li>
+            </ul>
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold mb-6">Кампус и возможности</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% block campus_features %}
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🏛️</span>
+              <div>
+                <h4 class="font-semibold">Инфраструктура</h4>
+                <p class="text-secondary text-sm">Лаборатории, библиотеки, коворкинги</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🌍</span>
+              <div>
+                <h4 class="font-semibold">Международные связи</h4>
+                <p class="text-secondary text-sm">Обмены и стажировки за рубежом</p>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">📚</span>
+              <div>
+                <h4 class="font-semibold">Исследования</h4>
+                <p class="text-secondary text-sm">Научные проекты и гранты</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">💼</span>
+              <div>
+                <h4 class="font-semibold">Карьерный центр</h4>
+                <p class="text-secondary text-sm">Стажировки и партнерства с компаниями</p>
+              </div>
+            </div>
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold mb-4">Контакты</h3>
+        <div class="space-y-3">
+          {% block contact_info %}
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📍</span>
+            <div>
+              <p class="font-medium">Адрес</p>
+              <p class="text-sm text-secondary">{{ university.city }}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🌐</span>
+            <div>
+              <p class="font-medium">Сайт</p>
+              <span class="text-sm text-secondary">Уточните на официальном сайте</span>
+            </div>
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h3 class="text-xl font-semibold mb-4">Преимущества</h3>
+        <div class="space-y-3">
+          {% block perks %}
+          <div class="flex items-center gap-3">
+            <span class="text-green-600 text-xl">✓</span>
+            <span class="text-sm">Современные программы</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-green-600 text-xl">✓</span>
+            <span class="text-sm">Поддержка карьерного роста</span>
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

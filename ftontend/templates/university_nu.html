@@ -1,36 +1,32 @@
-{% extends "base.html" %}
-{% block title %}{{ university.title }} — NeXus{% endblock %}
-{% block content %}
-<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
-  <header>
-    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Астана</p>
-    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
-    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
-  </header>
-
-  <div class="rounded-3xl overflow-hidden shadow-xl">
-    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
-  </div>
-
-  <div class="grid gap-8 md:grid-cols-2">
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Образовательная модель</h2>
-      <p class="text-secondary text-base">NU сотрудничает с ведущими зарубежными университетами, внедряет английский язык обучения и проектно-исследовательский подход. Программы аккредитованы международными агентствами.</p>
-    </article>
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Ключевые школы</h2>
-      <ul class="text-secondary space-y-2 list-disc list-inside">
-        <li>School of Engineering and Digital Sciences</li>
-        <li>School of Sciences and Humanities</li>
-        <li>Graduate School of Business и Public Policy</li>
-        <li>School of Medicine с современным клиническим центром</li>
-      </ul>
-    </article>
-  </div>
-
-  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
-    <h2 class="text-2xl font-semibold mb-4">Инфраструктура</h2>
-    <p class="text-secondary">Кампус Назарбаев Университета — это лаборатории, fab-labs, библиотека с круглосуточным доступом и современные общежития. Студенты участвуют в грантовых исследованиях, стартап-инкубаторах и международных обменах.</p>
-  </div>
-</section>
+{% extends "university_layout_base.html" %}
+{% block title %}Назарбаев Университет — NeXus{% endblock %}
+{% block hero_gradient %}from-slate-700 to-slate-900{% endblock %}
+{% block hero_title %}Назарбаев Университет{% endblock %}
+{% block hero_subtitle %}Исследовательский университет международного уровня в Астане{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Астана</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">🔬 STEM фокус</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Международные стандарты</span>
+{% endblock %}
+{% block about_content %}
+<p>NU реализует программы на английском языке, развивая исследовательские навыки и предпринимательское мышление.</p>
+<p>Кампус включает исследовательские центры, лаборатории и акселераторы стартапов.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-slate-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-slate-800">🧪 STEM</h3>
+  <ul class="space-y-2 text-slate-700">
+    <li>• Инженерия и IT</li>
+    <li>• Жизненные науки</li>
+    <li>• Математика и физика</li>
+  </ul>
+</div>
+<div class="bg-blue-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-blue-800">📊 Социальные науки и бизнес</h3>
+  <ul class="space-y-2 text-blue-700">
+    <li>• Экономика и публичная политика</li>
+    <li>• Бизнес-школа</li>
+    <li>• Образовательные программы</li>
+  </ul>
+</div>
 {% endblock %}

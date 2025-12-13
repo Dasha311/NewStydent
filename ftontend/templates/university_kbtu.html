@@ -1,36 +1,32 @@
-{% extends "base.html" %}
-{% block title %}{{ university.title }} — NeXus{% endblock %}
-{% block content %}
-<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
-  <header>
-    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">Алматы</p>
-    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
-    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
-  </header>
-
-  <div class="rounded-3xl overflow-hidden shadow-xl">
-    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
-  </div>
-
-  <div class="grid gap-8 md:grid-cols-2">
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Технологическое лидерство</h2>
-      <p class="text-secondary text-base">КБТУ готовит инженеров, data scientists и специалистов нефтегазовой отрасли. Университет развивает партнерства с индустрией и открывает двойные дипломы с британскими вузами.</p>
-    </article>
-    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
-      <h2 class="text-xl font-semibold">Что изучают студенты</h2>
-      <ul class="text-secondary space-y-2 list-disc list-inside">
-        <li>Computer Science и программная инженерия</li>
-        <li>Информационная безопасность и телеком</li>
-        <li>Химическая инженерия и нефтегазовое дело</li>
-        <li>Финансы и управление проектами</li>
-      </ul>
-    </article>
-  </div>
-
-  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
-    <h2 class="text-2xl font-semibold mb-4">Кампус и комьюнити</h2>
-    <p class="text-secondary">Кампус расположен в центре города и оснащён современными лабораториями, коворкингами и центрами кибербезопасности. Студенты участвуют в хакатонах, case championship и программах академической мобильности.</p>
-  </div>
-</section>
+{% extends "university_layout_base.html" %}
+{% block title %}Казахстанско-Британский Технический Университет — NeXus{% endblock %}
+{% block hero_gradient %}from-indigo-700 to-blue-800{% endblock %}
+{% block hero_title %}КБТУ{% endblock %}
+{% block hero_subtitle %}Технический университет с сильными программами в IT, инженерии и энергетике{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">💻 IT и инженерия</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Британские стандарты</span>
+{% endblock %}
+{% block about_content %}
+<p>КБТУ готовит специалистов в области цифровых технологий, энергетики и морской индустрии, опираясь на британские образовательные модели.</p>
+<p>Университет активно сотрудничает с компаниями, предлагая стажировки и проекты.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-indigo-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-indigo-800">💻 IT и инженерия</h3>
+  <ul class="space-y-2 text-indigo-700">
+    <li>• Программная инженерия</li>
+    <li>• Кибербезопасность</li>
+    <li>• Нефтегазовое дело</li>
+  </ul>
+</div>
+<div class="bg-blue-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-blue-800">⚡ Энергетика и бизнес</h3>
+  <ul class="space-y-2 text-blue-700">
+    <li>• Электроэнергетика</li>
+    <li>• Финансы и менеджмент</li>
+    <li>• Морская академия</li>
+  </ul>
+</div>
 {% endblock %}

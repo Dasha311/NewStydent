@@ -1,238 +1,42 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>КазНПУ им. Абая - NeXus</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --color-primary: #6C4DFF;
-      --color-bg: #F9F9FB;
-      --color-bg-secondary: #EDEDED;
-      --color-text: #1C1C1E;
-      --color-text-secondary: rgba(60, 60, 67, 0.6);
-      --color-border: #D1D1D6;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col">
-  <header class="bg-white border-b border-[var(--color-bg-secondary)] sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <img src="{% static 'Icons/logo.png' %}" alt="NeXus Logo" class="h-9 md:h-10" />
-      <nav class="hidden md:flex space-x-8 text-sm font-medium">
-        <a href="{% url 'main_menu' %}" class="hover:text-[var(--color-primary)]">Главная</a>
-        <a href="{% url 'course_view' %}" class="hover:text-[var(--color-primary)]">ВУЗы</a>
-        <a href="{% url 'about' %}" class="hover:text-[var(--color-primary)]">О нас</a>
-        <a href="{% url 'contacts' %}" class="hover:text-[var(--color-primary)]">ИИ - ассистент</a>
-      </nav>
-      <div class="hidden md:flex items-center gap-4">
-        <a href="{% url 'course_view' %}" class="text-[var(--color-primary)] hover:underline text-sm font-medium">Каталог ВУЗов</a>
-        <a href="{% url 'contacts' %}" class="bg-[var(--color-primary)] hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Связаться</a>
-      </div>
-    </div>
-  </header>
-
-  <main class="flex-grow">
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-green-600 to-green-800 text-white py-16">
-      <div class="max-w-7xl mx-auto px-6">
-        <a href="{% url 'course_view' %}" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition">
-          ← Назад к ВУЗам
-        </a>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">КазНПУ им. Абая</h1>
-            <p class="text-xl mb-6 opacity-90">Крупнейший педагогический вуз Казахстана</p>
-            <div class="flex flex-wrap gap-4 text-sm">
-              <span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы, Казахстан</span>
-              <span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1928</span>
-              <span class="bg-white/20 px-4 py-2 rounded-full">⭐ Лидер педагогического образования</span>
-            </div>
-          </div>
-          <div class="flex justify-center">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full">
-              <h3 class="text-xl font-semibold mb-4">Ключевая информация</h3>
-              <div class="space-y-3 text-sm">
-                <div class="flex justify-between">
-                  <span>Тип:</span>
-                  <span class="font-semibold">Педагогический университет</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Языки обучения:</span>
-                  <span class="font-semibold">Казахский, Русский</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Рейтинг:</span>
-                  <span class="font-semibold">★ 4.5/5</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>Студентов:</span>
-                  <span class="font-semibold">~15,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- University Visual -->
-    <section class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
-      <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/60">
-        <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-80 md:h-96 object-cover" />
-      </div>
-    </section>    
-
-    <!-- University Details -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-12">
-          
-          <!-- About University -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Об университете</h2>
-            <div class="space-y-4 text-lg leading-relaxed">
-              <p><strong>Казахский национальный педагогический университет имени Абая</strong> — ведущий педагогический вуз Казахстана, носящий имя великого казахского поэта и просветителя Абая Кунанбаева.</p>
-              <p>Основан 1 октября 1928 года как Казахский государственный университет. С 1991 года — педагогический университет имени Абая.</p>
-              <p>Университет готовит высококвалифицированных педагогов для системы образования Казахстана.</p>
-            </div>
-          </div>
-
-          <!-- Academic Programs -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Факультеты и специальности</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="bg-green-50 rounded-2xl p-6">
-                <h3 class="text-xl font-semibold mb-4 text-green-800">🎓 Педагогические науки</h3>
-                <ul class="space-y-2 text-green-700">
-                  <li>• Педагогика и психология</li>
-                  <li>• Дошкольное образование</li>
-                  <li>• Начальное образование</li>
-                  <li>• Специальная педагогика</li>
-                  <li>• Физическая культура</li>
-                </ul>
-              </div>
-              <div class="bg-blue-50 rounded-2xl p-6">
-                <h3 class="text-xl font-semibold mb-4 text-blue-800">📚 Гуманитарные науки</h3>
-                <ul class="space-y-2 text-blue-700">
-                  <li>• Казахская филология</li>
-                  <li>• Русская филология</li>
-                  <li>• Иностранные языки</li>
-                  <li>• История</li>
-                  <li>• География</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Infrastructure -->
-          <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-3xl font-bold mb-6">Кампус и инфраструктура</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-4">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🏛️</span>
-                  <div>
-                    <h4 class="font-semibold">Исторический кампус</h4>
-                    <p class="text-secondary text-sm">В центре Алматы</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">📚</span>
-                  <div>
-                    <h4 class="font-semibold">Научная библиотека</h4>
-                    <p class="text-secondary text-sm">1.5 млн+ изданий</p>
-                  </div>
-                </div>
-              </div>
-              <div class="space-y-4">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🔬</span>
-                  <div>
-                    <h4 class="font-semibold">Лаборатории</h4>
-                    <p class="text-secondary text-sm">Современное оборудование</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🎭</span>
-                  <div>
-                    <h4 class="font-semibold">Творческие студии</h4>
-                    <p class="text-secondary text-sm">Искусство и культура</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Contact Info -->
-          <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Контакты</h3>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📍</span>
-                <div>
-                  <p class="font-medium">Адрес</p>
-                  <p class="text-sm text-secondary">ул. Достык, 13, Алматы</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📞</span>
-                <div>
-                  <p class="font-medium">Телефон</p>
-                  <p class="text-sm text-secondary">+7 (727) 291-23-23</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">🌐</span>
-                <div>
-                  <p class="font-medium">Сайт</p>
-                  <a href="https://kaznpu.kz" class="text-sm text-blue-600 hover:underline">kaznpu.kz</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quick Facts -->
-          <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h3 class="text-xl font-semibold mb-4">Ключевые преимущества</h3>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Ведущий педагогический вуз</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">9 факультетов</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">60+ образовательных программ</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-green-600 text-xl">✓</span>
-                <span class="text-sm">Богатая история</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  {% include 'partials/footer.html' %}
-</body>
-</html>
+{% extends "university_layout_base.html" %}
+{% block title %}КазНПУ им. Абая — NeXus{% endblock %}
+{% block hero_gradient %}from-orange-600 to-amber-700{% endblock %}
+{% block hero_title %}КазНПУ им. Абая{% endblock %}
+{% block hero_subtitle %}Главный педагогический университет страны{% endblock %}
+{% block hero_badges %}
+<span class="bg-white/20 px-4 py-2 rounded-full">📍 Алматы</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">🎓 Основан в 1928</span>
+<span class="bg-white/20 px-4 py-2 rounded-full">⭐ Методические школы</span>
+{% endblock %}
+{% block key_info %}
+<div class="flex justify-between"><span>Тип:</span><span class="font-semibold">Педагогический университет</span></div>
+<div class="flex justify-between"><span>Языки обучения:</span><span class="font-semibold">Казахский, Русский</span></div>
+<div class="flex justify-between"><span>Профиль:</span><span class="font-semibold">Подготовка учителей и методистов</span></div>
+{% endblock %}
+{% block about_content %}
+<p>КазНПУ готовит учителей и методистов, сочетая классические педагогические традиции с современными цифровыми технологиями.</p>
+<p>Университет сотрудничает со школами и колледжами, обеспечивая студентам практику и наставничество.</p>
+{% endblock %}
+{% block faculty_columns %}
+<div class="bg-amber-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-amber-800">📘 Педагогика</h3>
+  <ul class="space-y-2 text-amber-700">
+    <li>• Начальное и среднее образование</li>
+    <li>• Психология и дефектология</li>
+    <li>• Методики преподавания</li>
+  </ul>
+</div>
+<div class="bg-cyan-50 rounded-2xl p-6">
+  <h3 class="text-xl font-semibold mb-4 text-cyan-800">🌐 Гуманитарные науки</h3>
+  <ul class="space-y-2 text-cyan-700">
+    <li>• Лингвистика и филология</li>
+    <li>• История и социальные науки</li>
+    <li>• Искусствоведение</li>
+  </ul>
+</div>
+{% endblock %}
+{% block perks %}
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Сильная практика в школах</span></div>
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Цифровые педагогические технологии</span></div>
+<div class="flex items-center gap-3"><span class="text-green-600 text-xl">✓</span><span class="text-sm">Наставничество от экспертов</span></div>
+{% endblock %}
