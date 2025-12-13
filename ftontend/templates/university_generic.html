@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ university.title }} — NeXus{% endblock %}
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-16 space-y-10">
+  <header>
+    <p class="text-sm uppercase tracking-[0.2em] text-[var(--brand-primary)] mb-3">{{ university.city|default:"Алматы" }}</p>
+    <h1 class="text-3xl md:text-5xl font-bold mb-6">{{ university.title }}</h1>
+    <p class="text-secondary text-lg md:text-xl">{{ university.description }}</p>
+  </header>
+
+  <div class="rounded-3xl overflow-hidden shadow-xl">
+    <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-72 object-cover" />
+  </div>
+
+  {% if university.highlights %}
+  <div class="bg-white rounded-3xl shadow p-8 space-y-5">
+    <h2 class="text-2xl font-semibold">Ключевые направления</h2>
+    <ul class="grid gap-3 sm:grid-cols-2 text-secondary list-disc list-inside">
+      {% for highlight in university.highlights %}
+      <li>{{ highlight }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h3 class="text-xl font-semibold">Чем известен университет</h3>
+      <p class="text-secondary">
+        {{ university.title }} развивает прикладные навыки студентов, поддерживает проектное обучение и
+        сотрудничает с индустрией. Учебные планы обновляются с учётом рынка труда, а преподаватели
+        используют современные образовательные технологии.
+      </p>
+    </article>
+    <article class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h3 class="text-xl font-semibold">Что ждёт студентов</h3>
+      <ul class="text-secondary space-y-2 list-disc list-inside">
+        <li>Практика и стажировки у партнёров отрасли</li>
+        <li>Проектные лаборатории и студенческие клубы</li>
+        <li>Международные обмены и совместные программы</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="bg-[var(--color-bg)] rounded-3xl p-8">
+    <h3 class="text-2xl font-semibold mb-4">Кампус и атмосфера</h3>
+    <p class="text-secondary">
+      В университете доступны современные аудитории, коворкинги и лаборатории. Студенты участвуют в
+      научных проектах, волонтёрских инициативах и культурных событиях, чтобы развивать не только
+      профессиональные, но и лидерские навыки.
+    </p>
+  </div>
+</section>
+{% endblock %}
