@@ -425,6 +425,31 @@ UNIVERSITY_LIST = [
     
 ]
 
+BRAND_STYLES = {
+    "almau": {"brand_color": "#D62828", "brand_color_soft": "rgba(214, 40, 40, 0.12)"},
+    "satbayev": {"brand_color": "#0F766E", "brand_color_soft": "rgba(15, 118, 110, 0.12)"},
+    "kbtu": {"brand_color": "#1D4ED8", "brand_color_soft": "rgba(29, 78, 216, 0.12)"},
+    "nu": {"brand_color": "#111827", "brand_color_soft": "rgba(17, 24, 39, 0.12)"},
+    "kaznu": {"brand_color": "#0EA5E9", "brand_color_soft": "rgba(14, 165, 233, 0.12)"},
+    "kaznmu": {"brand_color": "#16A34A", "brand_color_soft": "rgba(22, 163, 74, 0.12)"},
+    "kaznpu": {"brand_color": "#D97706", "brand_color_soft": "rgba(217, 119, 6, 0.12)"},
+    "kazumo": {"brand_color": "#DB2777", "brand_color_soft": "rgba(219, 39, 119, 0.12)"},
+    "technological": {"brand_color": "#7C3AED", "brand_color_soft": "rgba(124, 58, 237, 0.12)"},
+    "german": {"brand_color": "#2563EB", "brand_color_soft": "rgba(37, 99, 235, 0.12)"},
+    "sports": {"brand_color": "#F97316", "brand_color_soft": "rgba(249, 115, 22, 0.12)"},
+    "arts": {"brand_color": "#A855F7", "brand_color_soft": "rgba(168, 85, 247, 0.12)"},
+    "auezov": {"brand_color": "#059669", "brand_color_soft": "rgba(5, 150, 105, 0.12)"},
+    "buketov": {"brand_color": "#B45309", "brand_color_soft": "rgba(180, 83, 9, 0.12)"},
+    "narxoz": {"brand_color": "#BE123C", "brand_color_soft": "rgba(190, 18, 60, 0.12)"},
+    "turan": {"brand_color": "#0EA5E9", "brand_color_soft": "rgba(14, 165, 233, 0.12)"},
+}
+
+for university in UNIVERSITY_LIST:
+    styles = BRAND_STYLES.get(university["slug"])
+    if styles:
+        university.update(styles)
+
+
 UNIVERSITY_DATA = {university["slug"]: university for university in UNIVERSITY_LIST}
 
 def main_menu(request):

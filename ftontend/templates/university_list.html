@@ -3,6 +3,55 @@
 
 {% block title %}Каталог университетов — NeXus{% endblock %}
 
+{% block extra_head %}
+<style>
+  .university-card {
+    border: 1px solid var(--bg-secondary);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(28, 28, 30, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .university-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(28, 28, 30, 0.1);
+  }
+
+  .university-card .accent-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-soft));
+  }
+
+  .university-card .city-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .university-card .cta-button {
+    background: var(--accent-color);
+    color: #fff;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .university-card .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+    filter: brightness(0.92);
+  }
+</style>
+{% endblock %}
+
+
 {% block content %}
 <section class="bg-white border-b border-[var(--bg-secondary)]">
   <div class="max-w-7xl mx-auto px-6 py-12 space-y-8">
@@ -33,15 +82,18 @@
 
 <section class="max-w-7xl mx-auto px-6 py-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
   {% for university in page_obj %}
-  <article class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden flex flex-col">
+  <article class="university-card overflow-hidden flex flex-col" style="--accent-color: {{ university.brand_color|default:'#6C4DFF' }}; --accent-soft: {{ university.brand_color_soft|default:'rgba(108, 77, 255, 0.12)' }};">
+    <div class="accent-bar" aria-hidden="true"></div>
     <div class="h-48 overflow-hidden">
       <img src="{{ university.image }}" alt="{{ university.title }}" class="w-full h-full object-cover" />
     </div>
-    <div class="p-6 flex-1 flex flex-col">
-      <h2 class="text-xl font-semibold mb-2">{{ university.title }}</h2>
-      <p class="text-secondary text-sm mb-2 font-medium">{{ university.city }}</p>
-      <p class="text-secondary text-sm mb-6 flex-1">{{ university.description }}</p>
-      <a href="{% url 'university_detail' university.slug %}" class="inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white font-semibold px-5 py-2.5 rounded-xl transition hover:bg-indigo-600">
+    <div class="p-6 flex-1 flex flex-col gap-3">
+      <div class="flex items-start justify-between gap-3">
+        <h2 class="text-xl font-semibold leading-tight">{{ university.title }}</h2>
+        <span class="city-pill">{{ university.city }}</span>
+      </div>
+      <p class="text-secondary text-sm flex-1">{{ university.description }}</p>
+      <a href="{% url 'university_detail' university.slug %}" class="cta-button inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl">
         Подробнее
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" />
